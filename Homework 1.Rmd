@@ -1,0 +1,269 @@
+---
+title: "Stat 437 HW1"
+author: 
+     - Samantha Gregoryk 
+header-includes:
+   - \usepackage{bbm}
+   - \usepackage{amssymb}
+   - \usepackage{amsmath}
+   - \usepackage{graphicx,float}
+   - \usepackage{natbib}
+output:
+  pdf_document: default
+fontsize: 11pt
+---
+
+```{r, echo = TRUE, warning = FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+
+# import libraries
+library(nycflights13)
+library(dplyr)
+library(ggplot2)
+```
+
+# Problem 1
+
+Please refer to the NYC flight data `nycflights13` that has been discussed in the lecture notes and whose manual can be found at https://cran.r-project.org/web/packages/nycflights13/index.html. We will use `flights`, a tibble from `nycflights13`.
+
+You are interested in looking into the average `arr_delay` for 6 different `month` 12, 1, 2, 6, 7 and 8, for 3 different `carrier` "UA", "AA" and "DL", and for `distance` that are greater than 700 miles, since you suspect that colder months and longer distances may result in longer average arrival delays. Note that you need to extract observations from `flights` and obtain the needed sample means for `arr_delay`, and that you are requird to use `dplyr` for this purpose.
+
+The following tasks and questions are based on the extracted observations.
+
+(1.a) In a single plot, create a density plot for `arr_delay` for each of the 6 months with `color` aesthetic designated by `month`. Note that you need to convert `month` into a factor in order to create the plot. What can you say about the average `arr_delay` across the 6 months?
+
+```{r, 1a, echo = TRUE, warning = FALSE}
+# average `arr_delay` for 6 different `month` 12, 1, 2, 6, 7 and 8, for 3 different `carrier` "UA", "AA" and "DL"
+df = filter(flights, month %in% c(12, 1, 2, 6, 7, 8), 
+       carrier %in% c('UA', 'AA', 'DL'), distance > 700)
+
+# density plot
+
+# factor month 
+fac.month = as.factor(df$month)
+
+# create density plot for arr_delay for each of the 6 months
+# represent a density by dashed line
+ggplot(df, aes(x = arr_delay, color = fac.month)) + geom_density(linetype = "dashed") + theme_bw()
+```
+
+1A: What can you say about the average `arr_delay` across the 6 months? \vspace{0.2in}
+\newline The average delay for flights for the months of 12, 1, 2, 6, 7, 8 show that they are skewed to the left so the amount of delays for each month are minimal. As the year goes on, the average amount of delays decrease. 
+
+\newpage (1.b) In a single plot, create a boxplot for `arr_delay` for each of the 3 carriers. What can you say about the average `arr_delay` for the 3 carriers?
+
+```{r, 1b, echo = TRUE, warning = FALSE}
+# boxplot
+ggplot(df, aes(x = carrier, y = arr_delay)) + geom_boxplot() + theme_bw() + stat_summary(fun.y = mean, geom="point", shape = 23,size = 4)
+```
+
+1B: What can you say about the average `arr_delay` for the 3 carriers? \vspace{0.2in}
+\newline All carriers have similar interquartile ranges around 0 average delays. AA and DL have similar outliers of average delays while UA has less average delays than the other carriers. 
+
+\newpage (1.c) Create a pie chart for the 3 carriers where the percentages are the proportions of observations for each carrier and where percentages are superimposed on the sectors of the pie chart disc.
+
+```{r, 1c, echo = TRUE, warning = FALSE}
+pc = df %>% group_by(carrier) %>%
+  count() %>% ungroup() %>%
+  mutate(percentage=`n`/sum(`n`)) %>%
+  arrange(desc(carrier))
+
+# create labels using the percentages
+pc$labels <- scales::percent(pc$percentage)
+
+# pie chart
+ggplot(pc) + geom_bar(aes(x = "", y = percentage, fill = carrier), stat = "identity", width = 1) + coord_polar("y", start = 0) + theme_void() + geom_text(aes(x = 1, y = cumsum(percentage) - percentage/2, label = labels))
+```
+
+\newpage (1.d) Plot `arr_delay` against `distance` with `facet_grid` designated by `month` and `carrier`.
+
+```{r, 1d, echo = TRUE, warning = FALSE}
+# ggplot
+p1 = ggplot(df) + geom_point(mapping = aes(x = arr_delay, y = distance))
+
+# facet_grid
+p1 + facet_grid(month ~ carrier)
+```
+
+\newpage (1.e) For each feasible combination of values of `month` and `carrier`, compute the sample average of `arr_delay` and save them into the variable `mean_arr_delay`, and compute the sample average of `distance` and save these averages into the variable `mean_distance`. Plot `month` against `mean_arr_delay` with `shape` designated by `carrier` and `color` by `mean_distance`, and plot `month` against `mean_arr_delay` with `shape` designated by `carrier` and `color` by `mean_distance` and annotate each point by its associated `carrier` name. 
+
+```{r, 1e, echo = TRUE, warning = FALSE}
+# For each feasible combination of values of `month` and `carrier`
+# compute the sample average of `arr_delay` and save them into the variable `mean_arr_delay`
+# compute the sample average of `distance` and save these averages into the variable `mean_distance`
+
+# change NA values for computing averages
+df = as.data.frame(df)
+df[is.na(df)] <- 0
+
+# find the mean average of arr_delay for each carrier for each month
+
+# filter carriers
+cAA = df %>% filter(carrier %in% 'AA')
+cUA = df %>% filter(carrier %in% 'UA')
+cDL = df %>% filter(carrier %in% 'DL')
+
+# filter months for carrier CAA
+m12.CAA = cAA %>% filter(month %in% 12)
+m1.CAA = cAA %>% filter(month %in% 1)
+m2.CAA = cAA %>% filter(month %in% 2)
+m6.CAA = cAA %>% filter(month %in% 6)
+m7.CAA = cAA %>% filter(month %in% 7)
+m8.CAA = cAA %>% filter(month %in% 8)
+
+# average arr_delay for each month
+CAA.M12 = mean(m12.CAA[['arr_delay']])
+CAA.M1 = mean(m1.CAA[['arr_delay']])
+CAA.M2 = mean(m2.CAA[['arr_delay']])
+CAA.M6 = mean(m6.CAA[['arr_delay']])
+CAA.M7 = mean(m7.CAA[['arr_delay']])
+CAA.M8 = mean(m8.CAA[['arr_delay']])
+
+# df CAA
+col2 = c(CAA.M12, CAA.M1, CAA.M2, CAA.M6, CAA.M7, CAA.M8)
+col1 = c(12, 1, 2, 6, 7, 8)
+mad_CAA = as.data.frame(col1)
+mad_CAA['carrier'] = 'AA'
+mad_CAA['mad_CAA'] = col2
+names(mad_CAA)[names(mad_CAA) == "col1"] <- "month"
+
+# filter months for carrier CUA
+m12.CUA = cUA %>% filter(month %in% 12)
+m1.CUA = cUA %>% filter(month %in% 1)
+m2.CUA = cUA %>% filter(month %in% 2)
+m6.CUA = cUA %>% filter(month %in% 6)
+m7.CUA = cUA %>% filter(month %in% 7)
+m8.CUA = cUA %>% filter(month %in% 8)
+
+# average arr_delay for each month
+CUA.M12 = mean(m12.CUA[['arr_delay']])
+CUA.M1 = mean(m1.CUA[['arr_delay']])
+CUA.M2 = mean(m2.CUA[['arr_delay']])
+CUA.M6 = mean(m6.CUA[['arr_delay']])
+CUA.M7 = mean(m7.CUA[['arr_delay']])
+CUA.M8 = mean(m8.CUA[['arr_delay']])
+
+# df CUA
+col3 = c(CUA.M12, CUA.M1, CUA.M2, CUA.M6, CUA.M7, CUA.M8)
+mad_CUA = as.data.frame(col1)
+mad_CUA['carrier'] = 'UA'
+mad_CUA['mad_CUA'] = col3
+names(mad_CUA)[names(mad_CUA) == "col1"] <- "month"
+
+# filter months for carrier CDL
+m12.CDL = cDL %>% filter(month %in% 12)
+m1.CDL = cDL %>% filter(month %in% 1)
+m2.CDL = cDL %>% filter(month %in% 2)
+m6.CDL = cDL %>% filter(month %in% 6)
+m7.CDL = cDL %>% filter(month %in% 7)
+m8.CDL = cDL %>% filter(month %in% 8)
+
+# average arr_delay for each month
+CDL.M12 = mean(m12.CDL[['arr_delay']])
+CDL.M1 = mean(m1.CDL[['arr_delay']])
+CDL.M2 = mean(m2.CDL[['arr_delay']])
+CDL.M6 = mean(m6.CDL[['arr_delay']])
+CDL.M7 = mean(m7.CDL[['arr_delay']])
+CDL.M8 = mean(m8.CDL[['arr_delay']])
+
+# df CDL
+col4 = c(CDL.M12, CDL.M1, CDL.M2, CDL.M6, CDL.M7, CDL.M8)
+mad_CDL = as.data.frame(col1)
+mad_CDL['carrier'] = 'DL'
+mad_CDL['mad_CAA'] = col4
+names(mad_CDL)[names(mad_CDL) == "col1"] <- "month"
+
+# find the mean average of distance for each carrier for each month
+
+# average distance for each month
+CAA.M12.d = mean(m12.CAA[['distance']])
+CAA.M1.d = mean(m1.CAA[['distance']])
+CAA.M2.d = mean(m2.CAA[['distance']])
+CAA.M6.d = mean(m6.CAA[['distance']])
+CAA.M7.d = mean(m7.CAA[['distance']])
+CAA.M8.d = mean(m8.CAA[['distance']])
+
+# df CAA
+col5 = c(CAA.M12.d, CAA.M1.d, CAA.M2.d, CAA.M6.d, CAA.M7.d, CAA.M8.d)
+md_CAA = as.data.frame(col1)
+md_CAA['carrier'] = 'AA'
+md_CAA['md_CAA'] = col5
+names(md_CAA)[names(md_CAA) == "col1"] <- "month"
+
+# average distance for each month
+CUA.M12.d = mean(m12.CUA[['distance']])
+CUA.M1.d = mean(m1.CUA[['distance']])
+CUA.M2.d = mean(m2.CUA[['distance']])
+CUA.M6.d = mean(m6.CUA[['distance']])
+CUA.M7.d = mean(m7.CUA[['distance']])
+CUA.M8.d = mean(m8.CUA[['distance']])
+
+# df CUA
+col6 = c(CUA.M12.d, CUA.M1.d, CUA.M2.d, CUA.M6.d, CUA.M7.d, CUA.M8.d)
+md_CUA = as.data.frame(col1)
+md_CUA['carrier'] = 'UA'
+md_CUA['md_CUA'] = col6
+names(md_CUA)[names(md_CUA) == "col1"] <- "month"
+
+# average distance for each month
+CDL.M12.d = mean(m12.CDL[['distance']])
+CDL.M1.d = mean(m1.CDL[['distance']])
+CDL.M2.d = mean(m2.CDL[['distance']])
+CDL.M6.d = mean(m6.CDL[['distance']])
+CDL.M7.d = mean(m7.CDL[['distance']])
+CDL.M8.d = mean(m8.CDL[['distance']])
+
+# df CUA
+col7 = c(CDL.M12.d, CDL.M1.d, CDL.M2.d, CDL.M6.d, CDL.M7.d, CDL.M8.d)
+md_CDL = as.data.frame(col1)
+md_CDL['carrier'] = 'DL'
+md_CDL['md_CDL'] = col7
+names(md_CDL)[names(md_CDL) == "col1"] <- "month"
+
+# add col to row (month, carrier, mad)
+names(mad_CAA)<-c("month","carrier", "mean_arr_delay")
+names(mad_CUA)<-c("month","carrier", "mean_arr_delay")
+names(mad_CDL)<-c("month","carrier", "mean_arr_delay")
+
+mean_arr_delay <- rbind(mad_CAA, mad_CUA, mad_CDL)
+
+# add col to row (month, carrier, md)
+names(md_CAA)<-c("month","carrier", "mean_distance")
+names(md_CUA)<-c("month","carrier", "mean_distance")
+names(md_CDL)<-c("month","carrier", "mean_distance")
+
+mean_distance <- rbind(md_CAA, md_CUA, md_CDL)
+
+# combine two dataframes for plotting
+df.gg = merge(mean_arr_delay, mean_distance)
+
+# Plot `month` against `mean_arr_delay` with `shape` designated by `carrier` and `color` by `mean_distance`
+p1 = ggplot(df.gg, aes(x = month, y = mean_arr_delay)) + theme_bw() + geom_point(aes(colour = mean_distance, shape = carrier)) 
+
+# Plot `month` against `mean_arr_delay` with `shape` designated by `carrier` and `color` by `mean_distance` and annotate each point by its associated `carrier` name.
+p1 + annotate("text", x = 1, y = 1.1580524, label = "AA") + annotate("text", x = 12, y = 7.2236842, label = "AA") + annotate("text", x = 2, y = 0.9646570, label = "AA") + annotate("text", x = 6, y = 6.3943876, label = "AA") + annotate("text", x = 7, y = 4.1105874, label = "AA") + annotate("text", x = 8, y = -2.4747438, label = "AA") + annotate("text", x = 1, y = -4.0012147, label = "UA") + annotate("text", x = 12, y = 6.1796728, label = "UA") + annotate("text", x = 2, y = -4.4935567, label = "UA") + annotate("text", x = 6, y = 13.7785438, label = "UA") + annotate("text", x = 7, y = 15.1189711, label = "UA") + annotate("text", x = 8, y = 1.3104541, label = "UA") + annotate("text", x = 1, y = 3.6774970, label = "DL") + annotate("text", x = 12, y = 13.7297178, label = "DL") + annotate("text", x = 2, y = 0.4494093, label = "DL") + annotate("text", x = 6, y = 12.0054801, label = "DL") + annotate("text", x = 7, y = 9.9735931, label = "DL") + annotate("text", x = 8, y = 3.6012848, label = "DL")
+```
+
+\newpage
+
+# Problem 2
+
+Please refer to the data set `mpg` that is available from the `ggplot2` package. Plot `displ` against `hwy` with faceting by `drv` and `cyl`, `color` disgnated by `class`, and `shape` by `trans`. This illustrates visualization with 4 factors.
+
+```{r, p2, echo = TRUE, warning = FALSE}
+# load data
+data(mpg)
+
+# plot `displ` against `hwy` 
+pa = ggplot(mpg, aes(x = displ, y = hwy)) 
+
+# with faceting by `drv` and `cyl`
+pb = pa + facet_grid(drv ~ cyl)
+
+# `color` disgnated by `class`, and `shape` by `trans`
+pc = pb + theme_bw() + geom_point(aes(colour = class, shape = trans)) 
+
+# final plot
+pc
+```

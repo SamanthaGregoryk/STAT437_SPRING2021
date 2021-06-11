@@ -1,0 +1,293 @@
+---
+title: "Stat 437 HW2"
+author: "Samantha Gregoryk"
+header-includes:
+- \usepackage{bbm}
+- \usepackage{amssymb}
+- \usepackage{amsmath}
+- \usepackage{graphicx,float}
+- \usepackage{natbib}
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+fontsize: 11pt
+always_allow_html: yes
+---
+
+```{r, echo = TRUE, warning = FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
+
+# import libraries
+library(nycflights13)
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+library(tidyverse)
+library(igraph)
+library(igraphdata)
+library(plotly)
+library(shiny)
+```
+
+# Problem 1
+
+Please refer to the NYC flight data `nycflights13` that has been discussed in the lecture notes and whose manual can be found at https://cran.r-project.org/web/packages/nycflights13/index.html. We will use `flights`, a tibble from `nycflights13`.
+
+You are interested in looking into the average `arr_delay` for 4 different `month` 12, 1, 7 and 8, for 3 different `carrier` "UA", "AA" and "DL", and for `distance` that are greater than 700 miles, since you suspect that colder months and longer distances may result in longer average arrival delays. Note that you need to extract observations from `flights`, and that you are required to use `dplyr` for this purpose. 
+
+```{r, p1, echo = TRUE, warning = FALSE}
+# Extract observations from `flights`using `dplyr`
+flights = nycflights13::flights
+
+# change NA values for computing averages
+flights = as.data.frame(flights)
+flights[is.na(flights)] <- 0
+
+# average `arr_delay` 
+## for 4 different `month` 12, 1, 7 and 8 
+## for 3 different `carrier` "UA", "AA" and "DL"
+## for `distance` that are greater than 700 miles
+fUA = filter(flights, distance >= 700, month %in% c(12, 1, 7, 8, 3), carrier == 'UA')
+fAA = filter(flights, distance >= 700, month %in% c(12, 1, 7, 8, 3), carrier == 'AA')
+fDL = filter(flights, distance >= 700, month %in% c(12, 1, 7, 8, 3), carrier == 'DL')
+```
+
+The following tasks and questions are based on the extracted observations.
+
+(1.a) For each combination of the values of `carrier` and `month`, obtain the average `arr_delay` and obtain the average `distance`. Plot the average `arr_delay` against the average `distance`, use `carrier` as facet; add a title "Base plot" and center the title in the plot. This will be your base plot, say, as object `p`. Show the plot `p`.
+
+```{r, p1a, echo = TRUE, warning = FALSE}
+# For each combination of the values of `carrier` and `month`
+## obtain the average `arr_delay` 
+
+# filter months for carrier CAA
+m12.CAA = fAA %>% filter(month %in% 12)
+m1.CAA = fAA %>% filter(month %in% 1)
+m7.CAA = fAA %>% filter(month %in% 7)
+m8.CAA = fAA %>% filter(month %in% 8)
+m3.CAA = fAA %>% filter(month %in% 3)
+
+# average arr_delay for each month
+CAA.M12 = mean(m12.CAA[['arr_delay']])
+CAA.M1 = mean(m1.CAA[['arr_delay']])
+CAA.M7 = mean(m7.CAA[['arr_delay']])
+CAA.M8 = mean(m8.CAA[['arr_delay']])
+CAA.M3 = mean(m3.CAA[['arr_delay']])
+
+# df CAA
+col2.a = c(CAA.M12, CAA.M1, CAA.M7, CAA.M8, CAA.M3)
+col1.a = c(12, 1, 7, 8, 3)
+mad_CAA = as.data.frame(col1.a)
+mad_CAA['carrier'] = 'AA'
+mad_CAA['mad_CAA'] = col2.a
+names(mad_CAA)[names(mad_CAA) == "col1.a"] <- "month"
+
+# filter months for carrier CUA
+m12.CUA = fUA %>% filter(month %in% 12)
+m1.CUA = fUA %>% filter(month %in% 1)
+m7.CUA = fUA %>% filter(month %in% 7)
+m8.CUA = fUA %>% filter(month %in% 8)
+m3.CUA = fUA %>% filter(month %in% 3)
+
+# average arr_delay for each month
+CUA.M12 = mean(m12.CUA[['arr_delay']])
+CUA.M1 = mean(m1.CUA[['arr_delay']])
+CUA.M7 = mean(m7.CUA[['arr_delay']])
+CUA.M8 = mean(m8.CUA[['arr_delay']])
+CUA.M3 = mean(m3.CUA[['arr_delay']])
+
+# df CUA
+col2.b = c(CUA.M12, CUA.M1, CUA.M7, CUA.M8, CUA.M3)
+col1.b = c(12, 1, 7, 8, 3)
+mad_CUA = as.data.frame(col1.b)
+mad_CUA['carrier'] = 'UA'
+mad_CUA['mad_CUA'] = col2.b
+names(mad_CUA)[names(mad_CUA) == "col1.b"] <- "month"
+
+# filter months for carrier CDL
+m12.CDL = fDL %>% filter(month %in% 12)
+m1.CDL = fDL %>% filter(month %in% 1)
+m7.CDL = fDL %>% filter(month %in% 7)
+m8.CDL = fDL %>% filter(month %in% 8)
+m3.CDL = fDL %>% filter(month %in% 3)
+
+# average arr_delay for each month
+CDL.M12 = mean(m12.CDL[['arr_delay']])
+CDL.M1 = mean(m1.CDL[['arr_delay']])
+CDL.M7 = mean(m7.CDL[['arr_delay']])
+CDL.M8 = mean(m8.CDL[['arr_delay']])
+CDL.M3 = mean(m3.CDL[['arr_delay']])
+
+# df CDL
+col2.c = c(CDL.M12, CDL.M1, CDL.M7, CDL.M8, CDL.M3)
+col1.c = c(12, 1, 7, 8, 3)
+mad_CDL = as.data.frame(col1.c)
+mad_CDL['carrier'] = 'DL'
+mad_CDL['mad_CDL'] = col2.c
+names(mad_CDL)[names(mad_CDL) == "col1.c"] <- "month"
+
+## obtain the average `distance`
+
+# average distance for each month
+dCAA.M12 = mean(m12.CAA[['distance']])
+dCAA.M1 = mean(m1.CAA[['distance']])
+dCAA.M7 = mean(m7.CAA[['distance']])
+dCAA.M8 = mean(m8.CAA[['distance']])
+dCAA.M3 = mean(m3.CAA[['distance']])
+
+# df CAA
+col2.d = c(dCAA.M12, dCAA.M1, dCAA.M7, dCAA.M8, dCAA.M3)
+col1.d = c(12, 1, 7, 8, 3)
+md_CAA = as.data.frame(col1.d)
+md_CAA['carrier'] = 'AA'
+md_CAA['md_CAA'] = col2.d
+names(md_CAA)[names(md_CAA) == "col1.d"] <- "month"
+
+# average arr_delay for each month
+dCUA.M12 = mean(m12.CUA[['distance']])
+dCUA.M1 = mean(m1.CUA[['distance']])
+dCUA.M7 = mean(m7.CUA[['distance']])
+dCUA.M8 = mean(m8.CUA[['distance']])
+dCUA.M3 = mean(m3.CUA[['distance']])
+
+# df CUA
+col2.e = c(dCUA.M12, dCUA.M1, dCUA.M7, dCUA.M8, dCUA.M3)
+col1.e = c(12, 1, 7, 8, 3)
+md_CUA = as.data.frame(col1.e)
+md_CUA['carrier'] = 'UA'
+md_CUA['md_CUA'] = col2.e
+names(md_CUA)[names(md_CUA) == "col1.e"] <- "month"
+
+# average arr_delay for each month
+dCDL.M12 = mean(m12.CDL[['distance']])
+dCDL.M1 = mean(m1.CDL[['distance']])
+dCDL.M7 = mean(m7.CDL[['distance']])
+dCDL.M8 = mean(m8.CDL[['distance']])
+dCDL.M3 = mean(m3.CDL[['distance']])
+
+# df CDL
+col2.f = c(dCDL.M12, dCDL.M1, dCDL.M7, dCDL.M8, dCDL.M3)
+col1.f = c(12, 1, 7, 8, 3)
+md_CDL = as.data.frame(col1.f)
+md_CDL['carrier'] = 'DL'
+md_CDL['md_CDL'] = col2.f
+names(md_CDL)[names(md_CDL) == "col1.f"] <- "month"
+
+# add col to row (month, carrier, mad)
+names(mad_CAA)<-c("month","carrier", "mean_arr_delay")
+names(mad_CUA)<-c("month","carrier", "mean_arr_delay")
+names(mad_CDL)<-c("month","carrier", "mean_arr_delay")
+
+mean_arr_delay <- rbind(mad_CAA, mad_CUA, mad_CDL)
+
+# add col to row (month, carrier, md)
+names(md_CAA)<-c("month","carrier", "mean_distance")
+names(md_CUA)<-c("month","carrier", "mean_distance")
+names(md_CDL)<-c("month","carrier", "mean_distance")
+
+mean_distance <- rbind(md_CAA, md_CUA, md_CDL)
+
+# combine two dataframes for plotting
+df.gg = merge(mean_arr_delay, mean_distance)
+
+# Plot the average `arr_delay` (x) against the average `distance`(y) 
+# use `carrier` as facet; 
+# add a title "Base plot" and center the title in the plot
+# base plot, object `p`
+p = ggplot(df.gg, aes(x = mean_arr_delay, y = mean_distance)) + geom_point() + facet_wrap(~carrier) + ggtitle("Base Plot") + theme(plot.title = element_text(hjust = 0.5))
+
+# Show plot `p`
+p
+```
+
+(1.b) Modify `p` as follows to get a plot `p1`: connect the points for each `carrier` via one type of dashed line; code the 3 levels of `carrier` as $\alpha_1$, $\beta_{1,2}$ and $\gamma^{[0]}$, and display them in the strip texts; change the legend title into "My $\zeta$" (this legend is induced when you connect points for each `carrier` by a type of line), and put the legend in horizontal direction at the bottom of the plot; add a title "With math expressions" and center the title in the plot. Show the plot `p1`.
+
+```{r, p1b, echo = TRUE, warning = FALSE}
+# `p1`: connect the points for each `carrier` via one type of dashed line; 
+# code the 3 levels of `carrier` as $\alpha_1$, $\beta_{1,2}$ and $\gamma^{[0]}$
+# display them in the strip texts; 
+# change the legend title into "My $\zeta$" (this legend is induced when you connect points for each `carrier` by a type of line)
+# put the legend in horizontal direction at the bottom of the plot; 
+# add a title "With math expressions" and center the title in the plot. 
+drvStg = c(expression(alpha[1]), expression(beta[1,2]), expression(gamma^0))
+df.gg$DF = factor(df.gg$carrier, labels = drvStg)
+df.gg %>% select(month, carrier, mean_arr_delay, mean_distance, DF) %>% group_by(carrier) %>% slice(1)
+
+p1 = ggplot(df.gg, aes(x = mean_arr_delay, y = mean_distance)) + geom_point() + facet_wrap(~carrier) + geom_line(linetype = "dashed") + geom_point(aes(col = carrier)) + facet_wrap(~DF, labeller = label_parsed) + labs(col=expression(paste("Legend ", zeta, sep=""))) + scale_color_discrete(labels = drvStg) + scale_fill_continuous(guide = guide_legend()) + theme(legend.position = "bottom", legend.direction="horizontal") + ggtitle("With Math Expressions") + theme(plot.title = element_text(hjust = 0.5))
+
+# Show the plot `p1`.
+p1
+```
+
+(1.c) Modify `p1` as follows to get a plot `p2`: set the font size of strip text to be 12 and rotate the strip texts counterclockwise by 15 degrees; set the font size of the x-axis text to be 10 and rotate the x-axis text clockwise by 30 degrees; set the x-axis label as "$\hat{\mu}$ for mean arrival delay"; add a title "With front and text adjustments" and center the title in the plot. Show the plot `p2`
+
+```{r, p1c, echo = TRUE, warning = FALSE}
+# p2`: set the font size of strip text to be 12 and rotate the strip texts counterclockwise by 15 degrees
+# set the font size of the x-axis text to be 10 and rotate the x-axis text clockwise by 30 degrees
+# set the x-axis label as "$\hat{\mu}$ for mean arrival delay"
+# add a title "With front and text adjustments" and center the title in the plot. 
+s = expression(paste(hat(mu), " For Mean Arrival Delay", sep = ""))
+
+p2 = ggplot(df.gg, aes(x = mean_arr_delay, y = mean_distance)) + geom_point() + facet_wrap(~carrier) + geom_line(linetype = "dashed") + geom_point(aes(col = carrier)) + facet_wrap(~DF, labeller = label_parsed) + labs(col=expression(paste("Legend ", zeta, sep=""))) + scale_color_discrete(labels = drvStg) + scale_fill_continuous(guide = guide_legend()) + theme(legend.position = "bottom", legend.direction="horizontal") + theme(strip.text = element_text(size = 12, angle = 15), axis.text.x = element_text(size = 10, angle = -30)) + xlab(s) + ggtitle("With Front and Text Adjustments") + theme(plot.title = element_text(hjust = 0.5))
+   
+#Show the plot `p2`
+p2
+```
+
+# Problem 2 
+
+This problem requires you to visualize the binary relationship between members of a karate club as an undirected graph. Please install the R library `igraphdata`, from which you can obtain the data set `karate` and work on it. Create a graph for `karate`. Once you obtain the graph, you will see that each vertex is annotated by a number or letter. What do the numbers or letters refer to? Do you see subgraphs of the graph? If so, what do these subgraphs mean? 
+
+```{r, p2, echo = TRUE, warning = FALSE}
+# obtain the data set `karate`
+data(karate)
+summary(karate)
+
+# Create a graph for `karate`
+## each vertex is annotated by a number or letter
+p.s = simplify(karate, remove.multiple = T, remove.loops = T)
+plot(p.s, edge.arrow.size = .4, edge.color = "blue")
+table(vertex_attr(karate, "Faction"))
+```
+
+What do the numbers or letters refer to? Do you see subgraphs of the graph? If so, what do these subgraphs mean? 
+
+The letters represent who is running the karate class and the numbers refer to the members in the class all represented by nodes. I see a subgraph of members 17, 6, 7, 11, and 5 which means they are more distant to the H node than all the other nodes. 
+
+# Problem 3
+
+This problem requires to to create an interactive plot using `plotly`. If you want to display properly the plot in your HW answers, you may well need to set your HW document as an html file (instead of doc, docx or pdf file) when you compile your R codes.
+
+Please use the `mpg` data set we have discussed in the lectures. Create an interactive, scatter plot between "highway miles per gallon" `hwy` (on the y-axis) and "engine displacement in litres" `displ` (on the x-axis) with the `color` aesthetic designated by "number of cylinders" `cyl`, and set the x-axis label as "highway miles per gallon" and y-axis label as "highway miles per gallon". You need to check the object type for `cyl` and set it correctly when creating the plot. Add the title "# of cylinders" to the legend and adjust the vertical position of the legend, if you can. For the last, you may look through https://plotly.com/r/legend/ for help.
+
+```{r, p3, echo = TRUE, warning = FALSE}
+# Please use the `mpg` data 
+data(mpg)
+
+# Create an interactive, scatter plot between "highway miles per gallon" [`hwy` (on the y-axis)] and "engine displacement in litres" [`displ` (on the x-axis)]
+# with the `color` aesthetic designated by "number of cylinders" `cyl`
+# set the x-axis label as "highway miles per gallon" 
+# set the y-axis label as "highway miles per gallon"
+### You need to check the object type for `cyl` and set it correctly when creating the plot. 
+# Add the title "# of cylinders" to the legend and adjust the vertical position of the legend, if you can. 
+p3 = plot_ly(mpg, x = ~displ, y = ~hwy, color = ~cyl, type = "scatter") %>% layout(xaxis = list(title = "Highway Miles Per Gallon"), yaxis = list(title = "Highway Miles Per Gallon", title = "# of Cylinders", legend = list(orientation = 'v'))) 
+
+# show plot
+div(p3)
+
+# save plot to html
+#htmlwidgets::saveWidget(p3, file = "InteractivePlot.html")
+```
+
+
+
+
+
+
+
+
+
+
+
