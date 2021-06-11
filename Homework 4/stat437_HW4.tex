@@ -1,0 +1,1219 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  11pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Stat 437 HW4},
+  pdfauthor={Your Name (Your student ID)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx,float}
+\usepackage{natbib}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Stat 437 HW4}
+\author{Your Name (Your student ID)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\hypertarget{conceptual-exercises-i-bayes-classifier}{%
+\section{Conceptual exercises: I (Bayes
+classifier)}\label{conceptual-exercises-i-bayes-classifier}}
+
+\noindent
+1. This exercise is on Bayes theorem and Bayes classifier.
+
+1.1) State clearly the definition of the 0-1 loss function. Can this
+function be used in multi-class classification problems?
+
+The 0-1 loss function is the loss of L is 0 if an observation is
+classified right, otherwise L is 1. The 0-1 loss can be used in
+multi-class classification problems.
+
+1.2) Let \(Y\) be the random variable for the class label of a random
+vector \(X\), such that \(Y \in \mathcal{G}=\{1,\ldots, K\}\) where
+\(K \ge 2\) is the number of classes. Let \(\hat{Y}\) be the estimated
+class label for \(X\). Given the prior
+\(\Pr(Y=k)=\pi_k, k \in \mathcal{G}\) on Class \(k\) and the conditional
+density \(f_k(x)\) of \(X\) when it comes from Class \(k\). Provide the
+formula to obtain the posterior \(\Pr(Y=k|X=x)\), which is essentially
+the Bayes theorem. What is the Bayes classifier and how does it classify
+a new observation \(x_0\) from \(X\)? Is the decision boundary of the
+Bayes classifier linear or quadratic in \(X\)? Explain (but do not have
+to mathematically prove) why the Bayes classifier minimizes the expected
+0-1 loss. Note the a proof of the fact that the Bayes classifier
+minimizes the expected 0-1 loss is given in
+``LectureNotes4\_notes.pdf''. You should not copy and paste the proof.
+Instead, please provide the explanation based on your understanding of
+the proof.
+
+Posterior: \(\Pr(Y_i=j|x_i) = {f_j(x_i|Y_i=j)\Pr(Y_i=j)}/{f(x_i)}\)
+
+Bayes classifier uses prior, conditional, marginal, and posterior
+probabilities to create a Bayes model. It classifies a new observation
+by using to 0-1 loss. If the feature has a relationship with the
+classification, it can be used for more accurate predictions using the
+features.
+
+The decision boundary is linear in \(X\).
+
+Bayes classifier minimizes the expected 0-1 loss because it chooses the
+class that has the best posterior probability and penalizes the classes
+with misclassification.
+
+1.3) If \(K=2\) in subquestion 1.2), what is the threshold value on
+\(\Pr(Y=1|X=x_0)\) that is used by the Bayes classifier to determine the
+class label for \(x_0\)? Suppose you use a different threshold value on
+\(\Pr(Y=1|X=x_0)\) to classify \(x_0\), is the corresponding classifier
+still the Bayes classifier, and is the corresponding loss function still
+the 0-1 loss? Explain your answer. Provide a scenario where to classify
+an observation a different threshold value is more sensible than the
+threshold value used by the Bayes classifier.
+
+When \(K=2\), the threshold value on \(\Pr(Y=1|X=x_0)\) is 0.5 on the
+average label to determine the class label for \(x_0\).
+
+The corresponding classifier is still the Bayes classifier. The
+corresponding loss function is still the 0-1 loss.
+
+1.4) If \(K=2\) in subquestion 1.2), \(\pi_1=0.6\),
+\(f_1(x) \sim \text{Gaussian}(0,1)\) and
+\(f_2(x) \sim \text{Gaussian}(2,1)\) and \(x_0=1.5\). Compute
+\(\Pr(Y=1|X=x_0)\) and use the Bayes classifier to classify \(x_0\).
+
+\hypertarget{conceptual-exercises-ii-k-nn-classifier}{%
+\section{\texorpdfstring{Conceptual exercises: II (\(k\)-NN
+classifier)}{Conceptual exercises: II (k-NN classifier)}}\label{conceptual-exercises-ii-k-nn-classifier}}
+
+\noindent
+2. Given the training set \(\mathcal{T}\) of \(n\) observations
+\((x_{1},y_{1}),\ldots,(x_{n},y_{n})\), where \(y_i\) is the class label
+of observation \(x_i\) and \(y_i \in \mathcal{G}=\{1,\ldots,K\}\) for
+\(K \ge 2\), consider \(k\)-NN classifier, where \(k\) is the
+neighborhood size.
+
+2.1) Describe how the decision boundary (such as its smoothness and
+shape) of \(k\)-NN classifier changes as \(k\) changes.
+
+While \(k\) increases, \(Y(x)\) is the average of considerably many
+\(y_j\) 's, whose corresponding \(x_j\) 's in \(T_k(x)\) can span a
+large subset of the feature space. When feature observations are not far
+apart, their neighborhood will not contain different observations and be
+``insufficiently flexible''.
+
+2.2) Explain why the training error of \(1\)-NN classifier is \(0\).
+Provide an estimator of the test error of a classifier and explain why
+it can be used as such an estimator. Is it true that a large \(k\) leads
+to a \(k\)-NN classifier with smaller test error? Can the test error of
+a \(k\)-NN classifier be equal to the test error of the Bayes
+classifier? When \(k\) is large and \(k/n\) is small, what is a \(k\)-NN
+classifier approximately estimating?
+
+The training error of \(1\)-NN classifier is \(0\) because under certain
+conditions, the expected 0-1 loss can be well approximated by either the
+training error or the test error.
+
+It is not true that a large \(k\) leads to a \(k\)-NN classifier with
+smaller test error.
+
+The test error of a \(k\)-NN classifier can be equal to the test error
+of the Bayes classifier?
+
+When \(k\) is large and \(k/n\) is small, the \(k\)-NN classifier is
+approximately estimating the posterior.
+
+2.3) When there are \(K \ge 2\) classes, how does a \(k\)-NN classifier
+classify a test observation \(x_0\)?
+
+A \(k\)-NN classifier classifies a test observation \(x_0\) by basing
+its performance on smaller test errors.
+
+2.4) When should data be standardized before applying a \(k\)-NN
+classifier? When standardizing data, do we standardize each observation
+or each feature?
+
+Data be standardized before applying a \(k\)-NN classifier right before
+the data is being split into training and testing data.
+
+We standardize each each feature of the data (i.e.~column).
+
+2.5) Using your understanding of Example 3 in
+``LectureNotes4b\_notes.pdf'', provide a step-by-step guide on how to
+choose an optimal \(k\) for \(k\)-NN classifier using cross-validation.
+You can provide such as guide in the form of ``pseudocode'' (see, e.g.,
+\url{https://en.wikipedia.org/wiki/Pseudocode} for some details on
+pseudocode). Suppose the training set has few observations, can you
+still perform cross-validation in order to choose an optimal \(k\)?
+Explain your answer. (Hint: for the 2nd part, think about if having more
+observations helps better estimate test error.)
+
+How to choose an optimal \(k\) for \(k\)-NN classifier using
+cross-validation:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Randomly split n observations into m folds of approximately equal size
+\item
+  Pick fold s as ``test set'', set the remaining folds as ``training
+  set'', apply the kNN classifier, and obtain test error es
+\item
+  Do Item 2. for each s in \{1, . . . , m\}, and obtain m es's
+\item
+  Compute sample mean µˆ(k, m) and sample standard deviation σˆ(k, m)
+  for the m es's
+\item
+  Use µˆ(k, m) as an estimate of the test error of the classifier
+\item
+  Pick a sequence C of b distinct values for k
+\item
+  Do Step 1 and Step 2 for each k in C, obtain b estimated test errors,
+  µˆ(k, m), k ∈ C, for the b kNN classifiers
+\item
+  Set as the optimal \(ˆk\) for which µˆ(ˆk, m) is the smallest among
+  µˆ(k, m), k ∈ C
+\end{enumerate}
+
+You can still perform cross-validation in order to choose an optimal
+\(k\) with few observations.
+
+\hypertarget{conceptual-exercises-iii-discriminant-analysis}{%
+\section{Conceptual exercises: III (Discriminant
+analysis)}\label{conceptual-exercises-iii-discriminant-analysis}}
+
+\noindent
+3. Exercise 2 of Section 4.7 of the Text, which starts with ``It was
+stated in the text that classifying an observation to the class for
+which (4.12) is largest is equivalent to classifying an observation to
+the class for which (4.13) is largest. Prove that this is the case.''
+(Helpful information on how to prove this is contained in the lecture
+video on LDA and ``LectureNotes5b\_notes.pdf''.)
+
+\[P_k(x) = \frac{{\pi_k \frac{1}{sqrt(2\pi\sigma)}exp(\frac{-1}{2 \sigma^2}(x-u_k)^2)}} {\sum_{l = 1}^{K} \pi_l \frac{1}{sqrt(2\pi\sigma)}exp(\frac{-1}{2 \sigma^2}(x-u_l)^2)}\]
+\[logp_k(x) = log\pi_k - \frac{1}{2\sigma^2} (x-u_k)^2\]
+\[logp_k(x) = log\pi_k - (\frac{x^2}{2\sigma^2} - \frac{xu_k}{\sigma^2} + \frac{u^2_k}{2\sigma^2})\]
+\[\delta_k(x) = x * \frac{u_k}{\sigma^2} - \frac{u^2_k}{2\sigma^2} + log(\pi_k)\]
+\noindent
+4. Exercise 3 of Section 4.7 of the Text, which starts with ``This
+problem relates to the QDA model, in which the observations within each
+class are drawn from a normal distribution with a class specific mean
+vector and a class specific covariance matrix. We consider the simple
+case where p = 1; i.e.~there is only one feature.'' (Helpful information
+on how to prove this is contained in the lecture video on QDA and
+``LectureNotes5b\_notes.pdf''.)
+
+Replace \(\sigma\) with \(sigma_k\) for the posterior probability for
+Baye's classifier equation and we get:
+
+\[\delta_k(X) = log(\pi_k) - log(\sigma_k) - \frac{x^2}{2\sigma^2} - \frac{xu_k}{\sigma^2} + \frac{u^2_k}{2\sigma^2} \]
+\noindent
+5. Exercise 5 of Section 4.7 of the Text, which starts with ``We now
+examine the differences between LDA and QDA.'' (Hint: for this question,
+you may also use information from Figures 4.9, 4.10 and 4.11 in the
+Text.)
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  If the Bayes decision boundary is linear, do we expect LDA or QDA to
+  perform better on the training set? On the test set?
+\end{enumerate}
+
+QDA on training set - LDA on a on test set
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  If the Bayes decision boundary is non-linear, do we expect LDA or QDA
+  to perform better on the training set? On the test set?
+\end{enumerate}
+
+QDA will perform better both on the training and test sets.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  In general, as the sample size n increases, do we expect the test
+  prediction accuracy of QDA relative to LDA to improve, decline, or be
+  unchanged? Why?
+\end{enumerate}
+
+For QDA, if a sample size is small, QDA performs better since it depends
+on the variance of sample size. The performance of LDA and QDA depends
+on the Bayes' decision boundary.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  True or False: Even if the Bayes decision boundary for a given problem
+  is linear, we will probably achieve a superior test error rate using
+  QDA rather than LDA because QDA is flexible enough to model a linear
+  decision boundary.
+\end{enumerate}
+
+False
+
+\noindent
+6. Let \(Y\) be the random variable for the class label of a random
+vector \(X \in \mathbb{R}^p\) (where \(p\) is the number of features),
+such that \(Y \in \mathcal{G}=\{1,\ldots, K\}\) and \(\Pr(Y=k)=\pi_k\)
+for Class \(k\) with \(k \in \mathcal{G}\), where \(K \ge 2\) is the
+number of classes. Consider the Gaussian mixture model such that the
+conditional density of \(X\) when it comes from Class \(k\) is
+\(f_k(x) \sim \text{Gaussian}(\mu_k,\Sigma_k)\). Given the training set
+\(\mathcal{T}\) of \(n\) observations
+\((x_{1},y_{1}),\ldots,(x_{n},y_{n})\) on \((X,Y)\), where \(y_i\) is
+the class label of observation \(x_i\), do the following:
+
+6.1) Provide the MLEs of \(\pi_k\), \(\mu_k\) and \(\Sigma_k\) for each
+\(k \in \mathcal{G}\) respectively for the case where all \(\Sigma_k\)'s
+are equal and for the case where not all \(\Sigma_k\)'s are equal. When
+\(p >n\), is the MLE of \(\Sigma_k\) still accurate? If not, recommend a
+different estimator for estimating \(\Sigma_k\) and provide details on
+this estimator.
+
+\[\hat\pi_k = \frac{n_k}{n}\]
+
+\[\hat{u}_k = \sum_{i:y_i=k}\frac{x_i}{n_k}\]
+
+\[\hat\sum = \frac{1}{n-k}\sum_{k = 1}^{K}\sum_{i:y_i=k}(x_i-\hat{u}_k)(x_i-\hat{u}_k)^T\]
+
+6.2) Assume \(p=2\) and \(K=2\) and \(k=1\). For the density
+\(f_k(x) \sim \text{Gaussian}(\mu_k,\Sigma_k)\), what shape do its
+contours take, and how does \(\Sigma_k\) control the shape of these
+contours? How do you check if the conditional density of \(X\) given
+that it comes from Class \(k\) is Gaussian?
+
+6.3) Is it true that discriminant analysis will perform badly if the
+Gaussian assumption is violated? (Hint: for this question, you may also
+use the information provided by Figures 4.10 and 4.11 of the Text.) Let
+\(X=(X_1,\ldots,X_p)^P\), i.e., \(X_1\) up to \(X_p\) are the feature
+variables. Can discriminant analysis be applied to observations of \(X\)
+when some of \(X_j,j=1\ldots,p\) is a discrete variable (such as a
+categorical variable)? Explain your answer.
+
+Logistic regression can outperform LDA or QDA if the assumption on a
+Gaussian mixture model is violated. Discriminant analysis can be applied
+to observations of \(X\) when some of \(X_j,j=1\ldots,p\) is a discrete
+variable.
+
+6.4) What is a ROC curve, and what is AUC? How is AUC used to gauge the
+performance of a classifier? If you apply the same classifier, say, LDA
+or QDA under the same Gaussian mixture model, to two data sets that are
+independently generated from the same data generating process, i.e.,
+that are independently generated from \((X,Y)\) for classification
+problems, and obtain two ROC curves, would the two ROC curves be quite
+different? Explain your answer. When there are 3 or more classes, are
+the codes provided in the lecture notes able to obtain ROC curves and
+their AUC's for LDA and QDA?
+
+A ROC curve is a receiver operating characteristics (ROC) curve and is a
+popular graphic for simultaneously displaying the two types of errors
+for all possible thresholds. An AUC is area under the (ROC) curve that
+is the overall performance of a classifier, summarized over all possible
+thresholds.
+
+6.5) Describe the key similarities and differences, respectively,
+between LDA and logistic regression. Provide a situation where
+discriminant analysis can still be sensibly applied but logistic
+regression is not well-defined.
+
+Similarities: Differences:
+
+\hypertarget{applied-exercises-i-k-nn-classifier}{%
+\section{\texorpdfstring{Applied exercises: I (\(k\)-NN
+classifier)}{Applied exercises: I (k-NN classifier)}}\label{applied-exercises-i-k-nn-classifier}}
+
+\noindent
+7. Please refer to the NYC flight data \texttt{nycflights13} that has
+been discussed in the lecture notes and whose manual can be found at
+\url{https://cran.r-project.org/web/packages/nycflights13/index.html}.
+We will use \texttt{flights}, a tibble from \texttt{nycflights13}.
+
+Please use \texttt{set.seed(123)} for the whole of this exercise.
+Randomly select from \texttt{flights} for each of the 3 \texttt{carrier}
+``UA'', ``AA'' or ``DL'' 500 observations for the 3 features
+\texttt{dep\_delay}, \texttt{arr\_delay} and \texttt{distance}. Let us
+try to see if we can use the 3 features to identify if an observation
+belongs a specific carrier. The following tasks and questions are based
+on the extracted observations. Note that you need to remove rows with
+\texttt{na}'s from the extracted observations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(nycflights13)}
+\FunctionTok{data}\NormalTok{(flights)}
+
+\NormalTok{f }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(flights)}
+
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(f, f}\SpecialCharTok{$}\NormalTok{carrier }\SpecialCharTok{==} \FunctionTok{c}\NormalTok{(}\StringTok{"UA"}\NormalTok{, }\StringTok{"AA"}\NormalTok{, }\StringTok{"DL"}\NormalTok{))}
+\NormalTok{df2 }\OtherTok{\textless{}{-}}\NormalTok{ df1[, }\FunctionTok{c}\NormalTok{(}\StringTok{"carrier"}\NormalTok{, }\StringTok{"dep\_delay"}\NormalTok{, }\StringTok{"arr\_delay"}\NormalTok{, }\StringTok{"distance"}\NormalTok{)]}
+\NormalTok{flight }\OtherTok{\textless{}{-}}\NormalTok{ df2[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(df2), }\DecValTok{500}\NormalTok{), ]}
+\NormalTok{flight}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 500 x 4
+##    carrier dep_delay arr_delay distance
+##    <chr>       <dbl>     <dbl>    <dbl>
+##  1 UA             -6       -14     1065
+##  2 UA             15        20      997
+##  3 DL             -4       -24      760
+##  4 AA             -6        -1     2475
+##  5 UA             23        37     1065
+##  6 UA              1       -26     1416
+##  7 UA             -2       -17      200
+##  8 UA             -5        17      200
+##  9 DL            -10       -29     1035
+## 10 AA             -4       -21     1391
+## # ... with 490 more rows
+\end{verbatim}
+
+7.1) First, you need to standardize the features since they are on very
+different scales. Then randomly split the observations into a training
+set that contains 70\% of the observations and a test set that contains
+the remaining observations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# classes}
+\NormalTok{flight}\SpecialCharTok{$}\NormalTok{Class[flight}\SpecialCharTok{$}\NormalTok{carrier }\SpecialCharTok{==} \StringTok{"UA"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{flight}\SpecialCharTok{$}\NormalTok{Class[flight}\SpecialCharTok{$}\NormalTok{carrier }\SpecialCharTok{==} \StringTok{"AA"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{flight}\SpecialCharTok{$}\NormalTok{Class[flight}\SpecialCharTok{$}\NormalTok{carrier }\SpecialCharTok{==} \StringTok{"DL"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\CommentTok{\# standardize}
+\NormalTok{fdf }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(flight[, }\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{])}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\CommentTok{\# split data}
+\NormalTok{trainSet }\OtherTok{\textless{}{-}}\NormalTok{ base}\SpecialCharTok{::}\FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(fdf), }\FloatTok{0.7} \SpecialCharTok{*} \FunctionTok{nrow}\NormalTok{(fdf))}
+\NormalTok{testSet }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(fdf))[}\SpecialCharTok{{-}}\NormalTok{trainSet]}
+\NormalTok{train }\OtherTok{\textless{}{-}}\NormalTok{ fdf[trainSet, ]}
+\NormalTok{test }\OtherTok{\textless{}{-}}\NormalTok{ fdf[testSet, ]}
+
+\CommentTok{\# create class labels}
+\NormalTok{trainLabels }\OtherTok{\textless{}{-}}\NormalTok{ flight}\SpecialCharTok{$}\NormalTok{Class[trainSet]}
+\NormalTok{testLabels }\OtherTok{\textless{}{-}}\NormalTok{ flight}\SpecialCharTok{$}\NormalTok{Class[testSet]}
+\end{Highlighting}
+\end{Shaded}
+
+7.2) Consider the observations as forming 3 classes that are determined
+by \texttt{carrier}. To the training set, apply \(10\) fold
+cross-validation to \(k\)-NN classifier with features
+\texttt{arr\_delay}, \texttt{dep\_delay}, and \texttt{distance} to
+determine the optimal \(k\) from the values \(\{1,\ldots,15\}\). Apply
+the optimal \(k\)-NN to the test set, provide the classification table
+and the overall error rate, and provide visualization of the
+classification results. Do you think the error rate is reasonable?
+Explain your answer. (Hint: you can follow the strategy provided by
+Example 3 in ``LectureNotes4b\_notes.pdf''. )
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{=} \DecValTok{10}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{folds }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{m, }\FunctionTok{nrow}\NormalTok{(train), }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{k }\OtherTok{=} \DecValTok{2}
+\NormalTok{testError1 }\OtherTok{=} \FunctionTok{double}\NormalTok{(m)}
+
+\FunctionTok{library}\NormalTok{(MASS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'MASS'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(class)}
+
+\CommentTok{\# k min loop through s=1,...,m}
+\ControlFlowTok{for}\NormalTok{ (s }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{m) \{}
+\NormalTok{    trainingTmp }\OtherTok{=}\NormalTok{ train[folds }\SpecialCharTok{!=}\NormalTok{ s, ]}
+\NormalTok{    testTmp }\OtherTok{=}\NormalTok{ train[folds }\SpecialCharTok{==}\NormalTok{ s, ]}
+\NormalTok{    trainingLabsTmp }\OtherTok{=}\NormalTok{ trainLabels[folds }\SpecialCharTok{!=}\NormalTok{ s]}
+\NormalTok{    testLabsTmp }\OtherTok{=}\NormalTok{ trainLabels[folds }\SpecialCharTok{==}\NormalTok{ s]}
+\NormalTok{    knn2 }\OtherTok{=} \FunctionTok{knn}\NormalTok{(trainingTmp, testTmp, trainingLabsTmp, k)}
+\NormalTok{    nOfMissObs }\OtherTok{=} \FunctionTok{sum}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{as.numeric}\NormalTok{(knn2 }\SpecialCharTok{==}\NormalTok{ testLabsTmp))}
+\NormalTok{    terror }\OtherTok{=}\NormalTok{ nOfMissObs}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(testLabsTmp)  }\CommentTok{\# test error}
+\NormalTok{    testError1[s] }\OtherTok{=}\NormalTok{ terror}
+\NormalTok{\}  }\CommentTok{\# end of loop}
+
+\CommentTok{\# k max}
+\NormalTok{kmax }\OtherTok{=} \DecValTok{20}  \CommentTok{\# m=10 fold cv}
+\NormalTok{testErrors }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =}\NormalTok{ kmax)}
+\ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{kmax) \{}
+    \CommentTok{\# loop through k}
+\NormalTok{    testError1 }\OtherTok{=} \FunctionTok{double}\NormalTok{(m)  }\CommentTok{\# store test errors for each k}
+    \ControlFlowTok{for}\NormalTok{ (s }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{m) \{}
+        \CommentTok{\# loop through s}
+\NormalTok{        trainingTmp }\OtherTok{=}\NormalTok{ train[folds }\SpecialCharTok{!=}\NormalTok{ s, ]}
+\NormalTok{        testTmp }\OtherTok{=}\NormalTok{ train[folds }\SpecialCharTok{==}\NormalTok{ s, ]}
+\NormalTok{        trainingLabsTmp }\OtherTok{=}\NormalTok{ trainLabels[folds }\SpecialCharTok{!=}\NormalTok{ s]}
+\NormalTok{        testLabsTmp }\OtherTok{=}\NormalTok{ trainLabels[folds }\SpecialCharTok{==}\NormalTok{ s]}
+\NormalTok{        knntmp }\OtherTok{=} \FunctionTok{knn}\NormalTok{(trainingTmp, testTmp, trainingLabsTmp, k)}
+\NormalTok{        nOfMissObs }\OtherTok{=} \FunctionTok{sum}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{as.numeric}\NormalTok{(knntmp }\SpecialCharTok{==}\NormalTok{ testLabsTmp))}
+\NormalTok{        terror }\OtherTok{=}\NormalTok{ nOfMissObs}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(testLabsTmp)  }\CommentTok{\# test error}
+\NormalTok{        testError1[s] }\OtherTok{=}\NormalTok{ terror}
+\NormalTok{    \}  }\CommentTok{\# loop in s ends}
+\NormalTok{    testErrors[, k] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(testError1), }\FunctionTok{sd}\NormalTok{(testError1))}
+\NormalTok{\}  }\CommentTok{\# loop in k ends}
+
+\CommentTok{\# data frame for mean/sd}
+\FunctionTok{colnames}\NormalTok{(testErrors) }\OtherTok{=} \FunctionTok{paste}\NormalTok{(}\StringTok{"k="}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{kmax, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(testErrors) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"mean(TestError)"}\NormalTok{, }\StringTok{"sd(TestError)"}\NormalTok{)}
+\NormalTok{testErrors }\OtherTok{=} \FunctionTok{as.matrix.data.frame}\NormalTok{(testErrors)}
+\FunctionTok{as.numeric}\NormalTok{(testErrors[}\DecValTok{1}\NormalTok{, ])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0.6042736 0.5952505 0.5738013 0.5946522 0.6129289 0.5723092 0.5510342
+##  [8] 0.5503344 0.5575543 0.5247200 0.5210986 0.5272697 0.5238419 0.5044491
+## [15] 0.5077491 0.5222245 0.5040320 0.4869564 0.4910824 0.4853385
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# optimal k}
+\NormalTok{hatk }\OtherTok{=} \FunctionTok{which}\NormalTok{(testErrors[}\DecValTok{1}\NormalTok{, ] }\SpecialCharTok{==} \FunctionTok{min}\NormalTok{(testErrors[}\DecValTok{1}\NormalTok{, ]))}
+\NormalTok{hatk}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+The error rate is reasonable because all means and standard deviations
+are relatively close to one another. The smallest test error rate among
+a family of kNN classifiers is when k = 9.
+
+7.3) Note that your have standardized the features \texttt{arr\_delay},
+\texttt{dep\_delay}, and \texttt{distance}. However, with the
+unstandardized features, you would surely know that none of them follows
+a Gaussian distribution no matter with respect to which class (i.e.,
+\texttt{carrier}) you look at their observations since these features
+have non-negative values (whereas a Gaussian distribution can generate
+negative values). Again, the 3 classes are determined by
+\texttt{carrier}. So, you will apply QDA based on the 3 standardized the
+features to the training set to train the model, and then apply the
+trained model to the test set (that contains the 3 standardized the
+features) to classify its observations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{t }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(train)}
+\NormalTok{dd }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(t}\SpecialCharTok{$}\NormalTok{dep\_delay)}
+\NormalTok{ad }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(t}\SpecialCharTok{$}\NormalTok{arr\_delay)}
+\NormalTok{dst }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(t}\SpecialCharTok{$}\NormalTok{distance)}
+
+\NormalTok{qda.fit1 }\OtherTok{\textless{}{-}} \FunctionTok{qda}\NormalTok{(trainLabels }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ dd)}
+\NormalTok{pred1 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit1)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{mtx1 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(pred1)}
+\NormalTok{qda.fit2 }\OtherTok{\textless{}{-}} \FunctionTok{qda}\NormalTok{(trainLabels }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ ad)}
+\NormalTok{pred2 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit2)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{mtx2 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(pred2)}
+\NormalTok{qda.fit3 }\OtherTok{\textless{}{-}} \FunctionTok{qda}\NormalTok{(trainLabels }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ dst)}
+\NormalTok{pred3 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit3)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{mtx3 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(pred3)}
+
+\NormalTok{trainModel }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(mtx1, mtx2, mtx3)}
+
+\CommentTok{\# apply the trained model to the test set (that contains the}
+\CommentTok{\# 3 standardized the features) to classify its observations}
+\NormalTok{knnOpt }\OtherTok{\textless{}{-}} \FunctionTok{knn}\NormalTok{(trainModel, test, trainLabels, hatk)}
+\FunctionTok{table}\NormalTok{(knnOpt, testLabels)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       testLabels
+## knnOpt  0  1  2
+##      0 61 25 55
+##      1  0  0  0
+##      2  4  2  3
+\end{verbatim}
+
+(7.3a) First, check if the Gaussian assumption is satisfied. For this,
+note that if the standardized features \texttt{arr\_delay},
+\texttt{dep\_delay}, and \texttt{distance} follow a trivariate Gaussian
+distribution for each individual class, then any pair among the 3
+standardized features follows a bivariate Gaussian distribution for each
+individual class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"ggpubr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggdensity}\NormalTok{(flight}\SpecialCharTok{$}\NormalTok{dep\_delay, }\AttributeTok{main =} \StringTok{"Density plot of dep\_delay"}\NormalTok{, }
+    \AttributeTok{xlab =} \StringTok{"dep\_delay"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{stat437_HW4_files/figure-latex/unnamed-chunk-6-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggdensity}\NormalTok{(flight}\SpecialCharTok{$}\NormalTok{arr\_delay, }\AttributeTok{main =} \StringTok{"Density plot of arr\_delay"}\NormalTok{, }
+    \AttributeTok{xlab =} \StringTok{"arr\_delay"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{stat437_HW4_files/figure-latex/unnamed-chunk-6-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggdensity}\NormalTok{(flight}\SpecialCharTok{$}\NormalTok{distance, }\AttributeTok{main =} \StringTok{"Density plot of distance"}\NormalTok{, }
+    \AttributeTok{xlab =} \StringTok{"distance"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{stat437_HW4_files/figure-latex/unnamed-chunk-6-3} \end{center}
+
+(7.3b) Apply the estimated (i.e., trained) QDA model to the test set,
+provide the estimated mixing proportion and estimated mean vector for
+each class, and provide the classification table. If you randomly pick
+an observation on the 3 standardized features, is it approximately
+equally likely to belong to each of the 3 carriers? (You do not need to
+mathematically prove your answer. However, think along this line: we are
+testing the equality of 3 population proportions, and each estimated
+population proportion is based on around 350 observations, which
+approximately can be done via a z-test since the central limit theorem
+is in effect.) How is the performance of QDA on this test set? Explain
+your answers.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(MASS)}
+
+\CommentTok{\# apply the estimated (i.e., trained) QDA model to the test}
+\CommentTok{\# set provide the estimated mixing proportion and estimated}
+\CommentTok{\# mean vector for each class}
+\NormalTok{qda.class1 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit1, dd)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{qda.fit1}\SpecialCharTok{$}\NormalTok{prior}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         0         1         2 
+## 0.4257143 0.2342857 0.3400000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.fit1}\SpecialCharTok{$}\NormalTok{means}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   `t$dep_delay`
+## 0   -0.05812215
+## 1   -0.03939939
+## 2   -0.01103782
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.class2 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit2, ad)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{qda.fit2}\SpecialCharTok{$}\NormalTok{prior}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         0         1         2 
+## 0.4257143 0.2342857 0.3400000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.fit2}\SpecialCharTok{$}\NormalTok{means}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   `t$arr_delay`
+## 0   -0.08362717
+## 1   -0.08404590
+## 2    0.04009093
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.class3 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit3, dst)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{qda.fit3}\SpecialCharTok{$}\NormalTok{prior}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         0         1         2 
+## 0.4257143 0.2342857 0.3400000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.fit3}\SpecialCharTok{$}\NormalTok{means}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   `t$distance`
+## 0  0.184930194
+## 1 -0.008126183
+## 2 -0.051707353
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tst }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(test)}
+\NormalTok{dd2 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(tst}\SpecialCharTok{$}\NormalTok{dep\_delay)}
+\NormalTok{ad2 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(tst}\SpecialCharTok{$}\NormalTok{arr\_delay)}
+\NormalTok{dst2 }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(tst}\SpecialCharTok{$}\NormalTok{distance)}
+
+\CommentTok{\# provide the classification table}
+\FunctionTok{table}\NormalTok{(}\FunctionTok{as.data.frame}\NormalTok{(qda.class1), dd2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      dd2
+##       c(-0.336800313912433, -0.295951276445794, -0.193828682779199, -0.316375795179114, -0.418498388845709, 0.31678428555378, -0.255102238979156, -0.234677720245837, -0.091706089112603, -0.275526757712475, -0.0712815703792838, -0.214253201512518, -0.132555126579241, -0.357224832645752, 0.214661691887184, -0.112130607845922, 0.970368885019993, 0.112539098220589, 2.2571135652191, 0.541453991620291, -0.39807387011239, -0.15297964531256, -0.17340416404588, 0.480180435420333, 0.194237173153865, 0.949944366286674, \n1.01121792248663, 2.21626452775246, -0.0304325329126455, 0.664001104020206, 2.64517942115216, 0.132963616953908, 0.0512655420206311, 1.25631214728646, -0.438922907579029, 18.3924833645412, -0.0100080141793264, 0.909095328820035, 0.153388135687227, 0.0921145794872694, -0.377649351379071, 0.766123697686801, -0.459347426312348, 0.418906879220376, 0.56187851035361, 1.27673666601978, 0.173812654420546)
+##   1:3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(}\FunctionTok{as.data.frame}\NormalTok{(qda.class2), ad2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             ad2
+##              c(-0.305245575862532, -0.491280178411614, -0.52848709892143, 0.271461692039619, -0.584297479686154, 0.75515165866723, -0.398262877137073, -0.00759021178400251, -0.379659416882165, -0.323849036117441, -0.416866337391981, -0.268038655352716, -0.082004052803635, -0.0261936720389106, 0.0110132484709056, 0.494703215098517, 0.06682362923563, -0.212228274587992, -0.0447971322938187, -0.342452496372349, 0.122634010000354, -0.100607513058543, -0.156417893823267, 0.978393181726128, -0.62150440019597, -0.435469797646889, \n-0.863349383509776, 3.28522225333473, -0.807539002745052, -0.509883638666522, -0.119210973313451, 0.624927436882873, -0.547090559176338, 0.420289374078884, 1.07141048300067, 1.25744508554975, -0.286642115607624, 2.85734266747185, 1.57370390988319, -0.677314780960695, -0.361055956627257, 2.18761809829516, -0.0634005925487269, 0.234254771529803, -0.137814433568359, 0.643530897137782, -0.454073257901797, 1.05280702274576, 16.9773690009471, -0.695918241215603, -0.751728621980327, 0.401685913823976, 0.699341277902506, \n0.0296167087258137, 0.885375880451587, 0.345875533059252, 0.531910135608333, 0.922582800961403, 0.903979340706495, 0.513306675353425, 0.290065152294527, 0.438892834333792, -0.788935542490143, 0.197047851019987, 1.12722086376539, 0.0482201689807218, -0.565694019431246, 0.736548198412322, 0.0854270894905381, 0.104030549745446, 0.4574962945887, 0.159840930510171, 1.1458243240203, 0.141237470255262)
+##   c(1, 3, 2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(}\FunctionTok{as.data.frame}\NormalTok{(qda.class2), dst2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             dst2
+##              c(-0.454238595839656, -0.890393219952962, 0.0476967256809024, -1.69120171012821, -0.497139050670473, 1.45769167445375, 0.0090863163331671, 1.52061234153895, -0.910413432207343, 1.69078414570119, -1.25933713149799, -0.409908125847812, -1.39947861727866, -0.949023841555079, 0.339419818530458, -0.518589278085882, 1.72081446408276, 1.07301759613743, -0.887533189630908, -0.0152239414042959, 0.173538059851299, 0.307959484987859, -0.929003629300697, 0.868525428110534, -0.438508429068357, 0.0248164831044667, \n1.56208278120874, -0.627270430323951, 1.23746933965556, -0.551479626789508, -1.2493270253708, 1.53205246282717, 1.50345215960663, 0.317969591115049, -0.618690339357788, -0.419918231975003, -0.707351279341476, -0.637280536451142, 0.589672471710224, -0.532889429696154, -1.70979190722157, -0.425638292619112, -0.918993523173507, -0.5142992326028, 0.0119463466552216, -0.448518535195547, -0.449948550356575)
+##   c(1, 3, 2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                0
+\end{verbatim}
+
+If you randomly pick an observation on the 3 standardized features, it
+is approximately equally likely to belong to each of the 3 carriers. How
+is the performance of QDA on this test set? Explain your answers.
+
+(7.3c) Extract observations that are for ``UA'' or ``DL'' from the
+training set and the test set, respectively, to form a new training set
+and a new subset, so that there are now 2 classes ``UA'' and ``DL''.
+Apply QDA to the new training set and then apply the trained model to
+the new test set. Report the overall error rate on the test set, provide
+the ROC curve, and calculate the AUC. How is the performance of QDA on
+this test set? Explain your answer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{flight\_new }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(flight, flight}\SpecialCharTok{$}\NormalTok{carrier }\SpecialCharTok{==} \FunctionTok{c}\NormalTok{(}\StringTok{"UA"}\NormalTok{, }\StringTok{"DL"}\NormalTok{))}
+
+\CommentTok{\# standardize}
+\NormalTok{fdf\_new }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(flight\_new[, }\DecValTok{2}\SpecialCharTok{:}\DecValTok{4}\NormalTok{])}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\CommentTok{\# split data}
+\NormalTok{trainSet\_new }\OtherTok{\textless{}{-}}\NormalTok{ base}\SpecialCharTok{::}\FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(fdf\_new), }\FloatTok{0.7} \SpecialCharTok{*} \FunctionTok{nrow}\NormalTok{(fdf\_new))}
+\NormalTok{testSet\_new }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(fdf\_new))[}\SpecialCharTok{{-}}\NormalTok{trainSet\_new]}
+\NormalTok{train\_new }\OtherTok{\textless{}{-}}\NormalTok{ fdf[trainSet\_new, ]}
+\NormalTok{test\_new }\OtherTok{\textless{}{-}}\NormalTok{ fdf[testSet\_new, ]}
+
+\CommentTok{\# create class labels}
+\NormalTok{trainLabels\_new }\OtherTok{\textless{}{-}}\NormalTok{ flight\_new}\SpecialCharTok{$}\NormalTok{Class[trainSet\_new]}
+\NormalTok{testLabels\_new }\OtherTok{\textless{}{-}}\NormalTok{ flight\_new}\SpecialCharTok{$}\NormalTok{Class[testSet\_new]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(train\_new)}
+\NormalTok{dd\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(t\_new}\SpecialCharTok{$}\NormalTok{dep\_delay)}
+\NormalTok{ad\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(t\_new}\SpecialCharTok{$}\NormalTok{arr\_delay)}
+\NormalTok{dst\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(t\_new}\SpecialCharTok{$}\NormalTok{distance)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{qda.fit1\_new }\OtherTok{\textless{}{-}} \FunctionTok{qda}\NormalTok{(trainLabels\_new }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ dd\_new)}
+\NormalTok{pred1\_new }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit1\_new)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{mtx1\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(pred1\_new)}
+\NormalTok{qda.fit2\_new }\OtherTok{\textless{}{-}} \FunctionTok{qda}\NormalTok{(trainLabels\_new }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ ad\_new)}
+\NormalTok{pred2\_new }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit2\_new)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{mtx2\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(pred2\_new)}
+\NormalTok{qda.fit3\_new }\OtherTok{\textless{}{-}} \FunctionTok{qda}\NormalTok{(trainLabels\_new }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ dst\_new)}
+\NormalTok{pred3\_new }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit3\_new)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{mtx3\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(pred3\_new)}
+
+\NormalTok{trainModel\_new }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(mtx1\_new, mtx2\_new, mtx3\_new)}
+
+\CommentTok{\# apply the trained model to the test set (that contains the}
+\CommentTok{\# 3 standardized the features) to classify its observations}
+\NormalTok{knnOpt\_new }\OtherTok{\textless{}{-}} \FunctionTok{knn}\NormalTok{(trainModel\_new, test\_new, trainLabels\_new, }
+\NormalTok{    hatk)}
+\FunctionTok{table}\NormalTok{(knnOpt\_new, testLabels\_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           testLabels_new
+## knnOpt_new  0  2
+##          0 34 24
+##          2  0  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.class1\_new }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit1\_new, dd\_new)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{qda.fit1\_new}\SpecialCharTok{$}\NormalTok{prior}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         0         2 
+## 0.5555556 0.4444444
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.fit1\_new}\SpecialCharTok{$}\NormalTok{means}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   `t_new$dep_delay`
+## 0      -0.003744495
+## 2      -0.002519024
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.class2\_new }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit2\_new, ad\_new)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{qda.fit2\_new}\SpecialCharTok{$}\NormalTok{prior}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         0         2 
+## 0.5555556 0.4444444
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.fit2\_new}\SpecialCharTok{$}\NormalTok{means}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   `t_new$arr_delay`
+## 0        0.08542709
+## 2       -0.03270488
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.class3\_new }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(qda.fit3\_new, dst\_new)}\SpecialCharTok{$}\NormalTok{class}
+\NormalTok{qda.fit3\_new}\SpecialCharTok{$}\NormalTok{prior}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         0         2 
+## 0.5555556 0.4444444
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{qda.fit3\_new}\SpecialCharTok{$}\NormalTok{means}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   `t_new$distance`
+## 0       0.05438920
+## 2       0.02133678
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tst\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(test\_new)}
+\NormalTok{dd2\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(tst\_new}\SpecialCharTok{$}\NormalTok{dep\_delay)}
+\NormalTok{ad2\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(tst\_new}\SpecialCharTok{$}\NormalTok{arr\_delay)}
+\NormalTok{dst2\_new }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(tst\_new}\SpecialCharTok{$}\NormalTok{distance)}
+
+\CommentTok{\# provide the classification table}
+\FunctionTok{table}\NormalTok{(}\FunctionTok{as.data.frame}\NormalTok{(qda.class1), dd2\_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      dd2_new
+##       c(-0.336800313912433, 0.0921145794872694, -0.295951276445794, -0.377649351379071, -0.255102238979156, -0.316375795179114, -0.091706089112603, -0.275526757712475, -0.0712815703792838, -0.234677720245837, -0.132555126579241, 0.112539098220589, -0.193828682779199, -0.112130607845922, 0.275935248087142, -0.0508570516459647, 2.2571135652191, 0.521029472886971, -0.15297964531256, -0.17340416404588, 0.480180435420333, 0.194237173153865, 1.07249147868659, 0.888670810086716, -0.214253201512518, 0.357633323020418, \n-0.357224832645752, 1.90989674675267, 0.235086210620503, 0.664001104020206)
+##   1:3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(}\FunctionTok{as.data.frame}\NormalTok{(qda.class2), ad2\_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             ad2_new
+##              c(-0.305245575862532, 0.327272072804344, -0.491280178411614, -0.435469797646889, -0.398262877137073, -0.379659416882165, -0.323849036117441, -0.509883638666522, -0.416866337391981, 0.0110132484709056, -0.0261936720389106, -0.175021354078176, -0.082004052803635, 0.494703215098517, -0.52848709892143, 0.0296167087258137, -0.212228274587992, -0.0447971322938187, -0.00759021178400251, -0.100607513058543, 0.0854270894905381, -0.62150440019597, -0.863349383509776, 3.28522225333473, 0.438892834333792, -0.472676718156705, \n-0.342452496372349, -0.565694019431246, -0.286642115607624, 0.234254771529803, -0.119210973313451, 0.624927436882873, -0.733125161725419, 0.420289374078884, 0.122634010000354, 0.717944738157414, 0.922582800961403, 0.848168959941771, -0.547090559176338, 1.75973851243227, -0.268038655352716)
+##   c(1, 3, 2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(}\FunctionTok{as.data.frame}\NormalTok{(qda.class2), dst2\_new)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             dst2_new
+##              c(-0.454238595839656, -0.551479626789508, -0.890393219952962, 0.0119463466552216, -0.929003629300697, 0.0090863163331671, -0.910413432207343, 1.69078414570119, -1.70979190722157, -1.25933713149799, 1.52061234153895, -0.409908125847812, -0.949023841555079, -1.39947861727866, 0.339419818530458, 1.53205246282717, -0.518589278085882, 0.0248164831044667, 1.72081446408276, -0.887533189630908, 1.56208278120874, 0.173538059851299, 0.307959484987859, 0.0476967256809024, 1.49058202315738, 1.07301759613743, \n-0.5142992326028, -0.438508429068357, 1.50345215960663, 0.317969591115049)
+##   c(1, 3, 2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  0
+\end{verbatim}
+
+\hypertarget{applied-exercises-ii-discriminant-analysis}{%
+\section{Applied exercises: II (Discriminant
+analysis)}\label{applied-exercises-ii-discriminant-analysis}}
+
+\noindent
+8. The following is on software commands:
+
+(8.1) What is the main cause of the message ``Warning in
+\texttt{lda.default}(x, grouping, \ldots): variables are collinear''?
+What is the main cause of the message ``Error in \texttt{qda.default}(x,
+grouping, \ldots) : some group is too small for `qda'\,''?
+
+Warning in \texttt{lda.default}(x, grouping, \ldots): variables are
+collinear: the predictors are correlated, which leads to inclusive
+results if the predictors are too similar.
+
+Error in \texttt{qda.default}(x, grouping, \ldots) : some group is too
+small for `qda': there are factors that are being made to predict and
+they all need to have the same level of observations in order for it to
+work.
+
+(8.2) Provide details on the \texttt{list} that \texttt{predict\{MASS\}}
+returns.
+
+The list includes a class which is the map classification. It also
+includes posterior which is the posterior probabilites of the classes.
+
+(8.3) The arguments \texttt{gamma} and \texttt{lambda} of
+\texttt{rda\{klaR\}} are usually determined by cross-validation. Can
+they be set manually?
+
+Yes
+
+\noindent
+9. We will use the human cancer microarray data that were discussed in
+the lectures and are provided by the R library \texttt{ElemStatLearn}
+(available at
+\url{https://cran.r-project.org/src/contrib/Archive/ElemStatLearn/}).
+Pick 3 cancer types ``MELANOMA'', ``OVARIAN'' and ``RENAL'', and
+randomly select the same set of \(60\) genes for each cancer type.
+Please use \texttt{set.seed(123)} for the whole of this exercise. Your
+analysis will be based on observations for these genes and cancer types.
+
+9.1) Pick 2 features and visualize the observations using the 2
+features. Do you think it is hard to classify the observations based on
+the amount of overlap among the 3 neighborhoods of observations in each
+of the 3 classes? Here ``a neighborhood of observations in a class'' is
+a ``open disk that contains the observations in the class''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ElemStatLearn)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"nci"}\NormalTok{)}
+\NormalTok{n0 }\OtherTok{=} \FunctionTok{dim}\NormalTok{(nci)[}\DecValTok{2}\NormalTok{]}
+\NormalTok{p0 }\OtherTok{=} \FunctionTok{dim}\NormalTok{(nci)[}\DecValTok{1}\NormalTok{]}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{rSel }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{p0, }\AttributeTok{size =} \DecValTok{60}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{chk }\OtherTok{=} \FunctionTok{colnames}\NormalTok{(nci) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"MELANOMA"}\NormalTok{, }\StringTok{"OVARIAN"}\NormalTok{, }\StringTok{"RENAL"}\NormalTok{)}
+\NormalTok{cSel }\OtherTok{=} \FunctionTok{which}\NormalTok{(chk }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{ncia }\OtherTok{=}\NormalTok{ nci[rSel, cSel]}
+\FunctionTok{colnames}\NormalTok{(ncia) }\OtherTok{=} \FunctionTok{colnames}\NormalTok{(nci)[cSel]}
+
+\NormalTok{tmp }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\FunctionTok{t}\NormalTok{(ncia))}
+\NormalTok{tmp}\SpecialCharTok{$}\NormalTok{Class }\OtherTok{=} \FunctionTok{colnames}\NormalTok{(ncia)}
+\FunctionTok{table}\NormalTok{(tmp}\SpecialCharTok{$}\NormalTok{Class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## MELANOMA  OVARIAN    RENAL 
+##        8        6        9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tmp[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, (}\FunctionTok{ncol}\NormalTok{(tmp) }\SpecialCharTok{{-}} \DecValTok{2}\NormalTok{)}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(tmp)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           X59  X60 Class
+## RENAL   -0.03 3.50 RENAL
+## RENAL.1 -0.04 0.43 RENAL
+\end{verbatim}
+
+It is not hard to classify the observations based on the amount of
+overlap among the 3 neighborhoods of observations in each of the 3
+classes when viewed in their ambient space R\^{}2.
+
+9.2) Apply LDA and report the classwise error rate for each cancer type.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lda.fit }\OtherTok{=} \FunctionTok{lda}\NormalTok{(Class }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ tmp)}
+\NormalTok{lda.pred }\OtherTok{=} \FunctionTok{predict}\NormalTok{(lda.fit, tmp)}
+\NormalTok{TrueClassLabel }\OtherTok{=}\NormalTok{ tmp}\SpecialCharTok{$}\NormalTok{Class}
+\NormalTok{LDAEstimtedClassLabel }\OtherTok{=}\NormalTok{ lda.pred}\SpecialCharTok{$}\NormalTok{class}
+\FunctionTok{table}\NormalTok{(LDAEstimtedClassLabel, TrueClassLabel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      TrueClassLabel
+## LDAEstimtedClassLabel MELANOMA OVARIAN RENAL
+##              MELANOMA        6       0     0
+##              OVARIAN         0       5     0
+##              RENAL           2       1     9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# classwise errors}
+\end{Highlighting}
+\end{Shaded}
+
+MELANOMA: 6/6 = 1 RENAL: 5/5 = 1 OVARIAN: 9/12 = 0.75
+
+9.3) Use the library \texttt{klaR}, and apply regularized discriminant
+analysis (RDA) by setting the arguments \texttt{gamma} and
+\texttt{lambda} of \texttt{rda\{klaR\}} manually so that the resulting
+classwise error rate for each cancer type is zero.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(klaR)}
+
+\NormalTok{rda.fit }\OtherTok{=} \FunctionTok{rda}\NormalTok{(Class }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ tmp, }\AttributeTok{gamma =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{lambda =} \FloatTok{0.2}\NormalTok{)}
+\NormalTok{rda.pred }\OtherTok{=} \FunctionTok{predict}\NormalTok{(rda.fit, tmp)  }\CommentTok{\# classify obs in \textasciigrave{}tmp\textasciigrave{}}
+\NormalTok{TrueClassLabel }\OtherTok{=}\NormalTok{ tmp}\SpecialCharTok{$}\NormalTok{Class}
+\NormalTok{rDAEstimtedClassLabel }\OtherTok{=}\NormalTok{ rda.pred}\SpecialCharTok{$}\NormalTok{class}
+\FunctionTok{table}\NormalTok{(rDAEstimtedClassLabel, TrueClassLabel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      TrueClassLabel
+## rDAEstimtedClassLabel MELANOMA OVARIAN RENAL
+##              MELANOMA        8       0     0
+##              OVARIAN         0       6     0
+##              RENAL           0       0     9
+\end{verbatim}
+
+9.4) Obtain the estimated covariance matrices from the RDA and visualize
+them using the same strategy in Example 3 in
+``LectureNotes5c\_notes.pdf''. What can you say about the degree of
+dependence among these genes for each of the three cancer types? (Hint
+and caution: the class labels ``MELANOMA'', ``OVARIAN'' and ``RENAL''
+will be ordered sigmabetically by R. So, you need to keep track on which
+estimated covariance matrix is for which class. Otherwise, you will get
+wrong visualization.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hatSigma1 }\OtherTok{=}\NormalTok{ rda.fit}\SpecialCharTok{$}\NormalTok{covariances[, , }\DecValTok{1}\NormalTok{]}
+\NormalTok{hatSigma2 }\OtherTok{=}\NormalTok{ rda.fit}\SpecialCharTok{$}\NormalTok{covariances[, , }\DecValTok{2}\NormalTok{]}
+\NormalTok{hatSigma3 }\OtherTok{=}\NormalTok{ rda.fit}\SpecialCharTok{$}\NormalTok{covariances[, , }\DecValTok{3}\NormalTok{]}
+
+\FunctionTok{library}\NormalTok{(reshape2)}
+
+\NormalTok{melted\_hatSigma1 }\OtherTok{=} \FunctionTok{melt}\NormalTok{(hatSigma1)}
+\NormalTok{melted\_hatSigma2 }\OtherTok{=} \FunctionTok{melt}\NormalTok{(hatSigma2)}
+\NormalTok{melted\_hatSigma3 }\OtherTok{=} \FunctionTok{melt}\NormalTok{(hatSigma3)}
+\NormalTok{EstSigmaAll }\OtherTok{=} \FunctionTok{rbind}\NormalTok{(melted\_hatSigma1, melted\_hatSigma2, }\SpecialCharTok{+}\NormalTok{melted\_hatSigma3)}
+\NormalTok{EstSigmaAll}\SpecialCharTok{$}\NormalTok{Cancer }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"MELANOMA"}\NormalTok{, }\StringTok{"OVARIAN"}\NormalTok{, }\StringTok{"RENAL"}\NormalTok{), }\AttributeTok{each =} \FunctionTok{nrow}\NormalTok{(melted\_hatSigma1))}
+\NormalTok{EstSigmaAll}\SpecialCharTok{$}\NormalTok{Cancer }\OtherTok{=} \FunctionTok{factor}\NormalTok{(EstSigmaAll}\SpecialCharTok{$}\NormalTok{Cancer)}
+
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ EstSigmaAll, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Var1, }\AttributeTok{y =}\NormalTok{ Var2, }\AttributeTok{fill =}\NormalTok{ value)) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{scale\_fill\_gradient2}\NormalTok{(}\AttributeTok{low =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{high =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+} 
+    \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Cancer) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Estimated covariance matrices"}\NormalTok{) }\SpecialCharTok{+} 
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{stat437_HW4_files/figure-latex/unnamed-chunk-13-1} \end{center}
+
+There is much less degree of dependence among genes for ``RENAL'' cancer
+versus thes genes for other two cancer types.
+
+\end{document}

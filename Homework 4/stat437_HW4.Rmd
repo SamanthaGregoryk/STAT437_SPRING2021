@@ -1,0 +1,487 @@
+---
+title: "Stat 437 HW4"
+author: "Your Name (Your student ID)"
+header-includes:
+- \usepackage{bbm}
+- \usepackage{amssymb}
+- \usepackage{amsmath}
+- \usepackage{graphicx,float}
+- \usepackage{natbib}
+output:
+  word_document: default
+  pdf_document: default
+fontsize: 11pt
+---
+
+```{r, echo=FALSE, warning=FALSE}
+library(knitr)
+opts_chunk$set(fig.align="center",tidy.opts=list(width.cutoff=60),tidy=TRUE)
+library(dplyr)
+```
+
+# Conceptual exercises: I (Bayes classifier)
+
+\noindent
+1. This exercise is on Bayes theorem and Bayes classifier. 
+ 
+1.1) State clearly the definition of the 0-1 loss function. Can this function be used in multi-class classification problems?
+
+The 0-1 loss function is the loss of L is 0 if an observation is classified right, otherwise L is 1. The 0-1 loss can be used in multi-class classification problems. 
+
+1.2) Let $Y$ be the random variable for the class label of a random vector $X$, such that $Y \in \mathcal{G}=\{1,\ldots, K\}$ where $K \ge 2$ is the number of classes. Let $\hat{Y}$ be the estimated class label for $X$. Given the prior $\Pr(Y=k)=\pi_k, k \in \mathcal{G}$ on Class $k$ and the conditional density $f_k(x)$ of $X$ when it comes from Class $k$. Provide the formula to obtain the posterior $\Pr(Y=k|X=x)$, which is essentially the Bayes theorem. What is the Bayes classifier and how does it classify a new observation $x_0$ from $X$? Is the decision boundary of the Bayes classifier linear or quadratic in $X$? Explain (but do not have to mathematically prove) why the Bayes classifier minimizes the expected 0-1 loss. Note the a proof of the fact that the Bayes classifier minimizes the expected 0-1 loss is given in "LectureNotes4_notes.pdf". You should not copy and paste the proof. Instead, please provide the explanation based on your understanding of the proof.
+
+Posterior: $\Pr(Y_i=j|x_i) = {f_j(x_i|Y_i=j)\Pr(Y_i=j)}/{f(x_i)}$
+
+Bayes classifier uses prior, conditional, marginal, and posterior probabilities to create a Bayes model. It classifies a new observation by using to 0-1 loss. If the feature has a relationship with the classification, it can be used for more accurate predictions using the features. 
+
+The decision boundary is linear in $X$. 
+
+Bayes classifier minimizes the expected 0-1 loss because it chooses the class that has the best posterior probability and penalizes the classes with misclassification. 
+
+1.3) If $K=2$ in subquestion 1.2), what is the threshold value on $\Pr(Y=1|X=x_0)$ that is used by the Bayes classifier to determine the class label for $x_0$? Suppose you use a different threshold value on $\Pr(Y=1|X=x_0)$ to classify $x_0$, is the corresponding classifier still the Bayes classifier, and is the corresponding loss function still the 0-1 loss? Explain your answer. Provide a scenario where to classify an observation a different threshold value is more sensible than the threshold value used by the Bayes classifier.  
+
+When $K=2$, the threshold value on $\Pr(Y=1|X=x_0)$ is 0.5 on the average label to determine the class label for $x_0$. 
+
+The corresponding classifier is still the Bayes classifier. The corresponding loss function is still the 0-1 loss. 
+
+1.4) If $K=2$ in subquestion 1.2), $\pi_1=0.6$, $f_1(x) \sim \text{Gaussian}(0,1)$ and $f_2(x) \sim \text{Gaussian}(2,1)$ and $x_0=1.5$. Compute $\Pr(Y=1|X=x_0)$ and use the Bayes classifier to classify $x_0$. 
+
+# Conceptual exercises: II ($k$-NN classifier)
+
+\noindent
+2. Given the training set $\mathcal{T}$ of $n$ observations $(x_{1},y_{1}),\ldots,(x_{n},y_{n})$, where $y_i$ is the class label of observation $x_i$ and $y_i \in \mathcal{G}=\{1,\ldots,K\}$ for $K \ge 2$, consider $k$-NN classifier, where $k$ is the neighborhood size.  
+
+2.1) Describe how the decision boundary (such as its smoothness and shape) of $k$-NN classifier changes as $k$ changes. 
+
+While $k$ increases, $Y(x)$ is the average of considerably many $y_j$ ’s, whose corresponding $x_j$ ’s in $T_k(x)$ can span a large subset of the feature space. When feature observations are not far apart, their neighborhood will not contain different observations and be "insufficiently flexible". 
+
+2.2) Explain why the training error of $1$-NN classifier is $0$. Provide an estimator of the test error of a classifier and explain why it can be used as such an estimator. Is it true that a large $k$ leads to a $k$-NN classifier with smaller test error? Can the test error of a $k$-NN classifier be equal to the test error of the Bayes classifier? When $k$ is large and $k/n$ is small, what is a $k$-NN classifier approximately estimating?
+
+The training error of $1$-NN classifier is $0$ because under certain conditions, the expected 0-1 loss can be well approximated by either the training error or the test error.
+
+It is not true that a large $k$ leads to a $k$-NN classifier with smaller test error.
+
+The test error of a $k$-NN classifier can be equal to the test error of the Bayes classifier? 
+
+When $k$ is large and $k/n$ is small, the $k$-NN classifier is approximately estimating the posterior. 
+
+2.3) When there are $K \ge 2$ classes, how does a $k$-NN classifier classify a test observation $x_0$? 
+
+A $k$-NN classifier classifies a test observation $x_0$ by basing its performance on smaller test errors. 
+
+2.4) When should data be standardized before applying a $k$-NN classifier? When standardizing data, do we standardize each observation or each feature?
+
+Data be standardized before applying a $k$-NN classifier right before the data is being split into training and testing data. 
+
+We standardize each each feature of the data (i.e. column). 
+
+2.5) Using your understanding of Example 3 in "LectureNotes4b_notes.pdf", provide a step-by-step guide on how to choose an optimal $k$ for $k$-NN classifier using cross-validation. You can provide such as guide in the form of "pseudocode" (see, e.g., https://en.wikipedia.org/wiki/Pseudocode for some details on pseudocode). Suppose the training set has few observations, can you still perform cross-validation in order to choose an optimal $k$? Explain your answer. (Hint: for the 2nd part, think about if having more observations helps better estimate test error.)
+
+How to choose an optimal $k$ for $k$-NN classifier using cross-validation: 
+
+1. Randomly split n observations into m folds of approximately equal size
+2. Pick fold s as “test set”, set the remaining folds as “training set”, apply the kNN classifier, and obtain test error es
+3. Do Item 2. for each s in {1, . . . , m}, and obtain m es’s
+4. Compute sample mean µˆ(k, m) and sample standard deviation σˆ(k, m) for the m es’s
+5. Use µˆ(k, m) as an estimate of the test error of the classifier
+6. Pick a sequence C of b distinct values for k
+7. Do Step 1 and Step 2 for each k in C, obtain b estimated test errors, µˆ(k, m), k ∈ C, for the b kNN classifiers
+8. Set as the optimal $ˆk$ for which µˆ(ˆk, m) is the smallest among µˆ(k, m), k ∈ C
+
+You can still perform cross-validation in order to choose an optimal $k$ with few observations. 
+
+# Conceptual exercises: III (Discriminant analysis)
+
+\noindent
+3. Exercise 2 of Section 4.7 of the Text, which starts with "It was stated in the text that classifying an observation to the class for which (4.12) is largest is equivalent to classifying an observation to the class for which (4.13) is largest. Prove that this is the case." (Helpful information on how to prove this is contained in the lecture video on LDA and "LectureNotes5b_notes.pdf".)  
+
+$$P_k(x) = \frac{{\pi_k \frac{1}{sqrt(2\pi\sigma)}exp(\frac{-1}{2 \sigma^2}(x-u_k)^2)}} {\sum_{l = 1}^{K} \pi_l \frac{1}{sqrt(2\pi\sigma)}exp(\frac{-1}{2 \sigma^2}(x-u_l)^2)}$$
+$$logp_k(x) = log\pi_k - \frac{1}{2\sigma^2} (x-u_k)^2$$
+$$logp_k(x) = log\pi_k - (\frac{x^2}{2\sigma^2} - \frac{xu_k}{\sigma^2} + \frac{u^2_k}{2\sigma^2})$$
+$$\delta_k(x) = x * \frac{u_k}{\sigma^2} - \frac{u^2_k}{2\sigma^2} + log(\pi_k)$$
+\noindent
+4. Exercise 3 of Section 4.7 of the Text, which starts with "This problem relates to the QDA model, in which the observations within each class are drawn from a normal distribution with a class specific mean vector and a class specific covariance matrix. We consider the simple case where p = 1; i.e. there is only one feature." (Helpful information on how to prove this is contained in the lecture video on QDA and "LectureNotes5b_notes.pdf".) 
+
+Replace $\sigma$ with $sigma_k$ for the posterior probability for Baye's classifier equation and we get:
+
+$$\delta_k(X) = log(\pi_k) - log(\sigma_k) - \frac{x^2}{2\sigma^2} - \frac{xu_k}{\sigma^2} + \frac{u^2_k}{2\sigma^2} $$
+\noindent
+5. Exercise 5 of Section 4.7 of the Text, which starts with "We now examine the differences between LDA and QDA." (Hint: for this question, you may also use information from Figures 4.9, 4.10 and 4.11 in the Text.)
+
+(a) If the Bayes decision boundary is linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+
+QDA on training set - LDA on a on test set
+
+(b) If the Bayes decision boundary is non-linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+
+QDA will perform better both on the training and test sets.
+
+(c) In general, as the sample size n increases, do we expect the test prediction accuracy of QDA relative to LDA to improve, decline, or be unchanged? Why?
+
+For QDA, if a sample size is small, QDA performs better since it depends on the variance of sample size. The performance of LDA and QDA depends on the Bayes’ decision boundary.
+
+(d) True or False: Even if the Bayes decision boundary for a given problem is linear, we will probably achieve a superior test error rate using QDA rather than LDA because QDA is flexible enough to model a linear decision boundary.
+
+False
+
+\noindent
+6. Let $Y$ be the random variable for the class label of a random vector $X \in \mathbb{R}^p$ (where $p$ is the number of features), such that $Y \in \mathcal{G}=\{1,\ldots, K\}$ and $\Pr(Y=k)=\pi_k$ for Class $k$ with $k \in \mathcal{G}$, where $K \ge 2$ is the number of classes. Consider the Gaussian mixture model such that the conditional density of $X$ when it comes from Class $k$ is $f_k(x) \sim \text{Gaussian}(\mu_k,\Sigma_k)$. Given the training set $\mathcal{T}$ of $n$ observations $(x_{1},y_{1}),\ldots,(x_{n},y_{n})$ on $(X,Y)$, where $y_i$ is the class label of observation $x_i$, do the following:
+
+6.1) Provide the MLEs of $\pi_k$, $\mu_k$ and $\Sigma_k$ for each $k \in \mathcal{G}$ respectively for the case where all $\Sigma_k$'s are equal and for the case where not all $\Sigma_k$'s are equal. When $p >n$, is the MLE of $\Sigma_k$ still accurate? If not, recommend a different estimator for estimating $\Sigma_k$ and provide details on this estimator.
+
+$$\hat\pi_k = \frac{n_k}{n}$$
+
+$$\hat{u}_k = \sum_{i:y_i=k}\frac{x_i}{n_k}$$
+
+$$\hat\sum = \frac{1}{n-k}\sum_{k = 1}^{K}\sum_{i:y_i=k}(x_i-\hat{u}_k)(x_i-\hat{u}_k)^T$$
+
+6.2) Assume $p=2$ and $K=2$ and $k=1$. For the density $f_k(x) \sim \text{Gaussian}(\mu_k,\Sigma_k)$, what shape do its contours take, and how does $\Sigma_k$ control the shape of these contours? How do you check if the conditional density of $X$ given that it comes from Class $k$ is Gaussian?
+
+6.3) Is it true that discriminant analysis will perform badly if the Gaussian assumption is violated? (Hint: for this question, you may also use the information provided by Figures 4.10 and 4.11 of the Text.) Let $X=(X_1,\ldots,X_p)^P$, i.e., $X_1$ up to $X_p$ are the feature variables. Can discriminant analysis be applied to observations of $X$ when some of $X_j,j=1\ldots,p$ is a discrete variable (such as a categorical variable)? Explain your answer.
+
+Logistic regression can outperform LDA or QDA if the assumption on a Gaussian mixture model is violated. 
+Discriminant analysis can be applied to observations of $X$ when some of $X_j,j=1\ldots,p$ is a discrete variable.
+
+6.4) What is a ROC curve, and what is AUC? How is AUC used to gauge the performance of a classifier? If you apply the same classifier, say, LDA or QDA under the same Gaussian mixture model, to two data sets that are independently generated from the same data generating process, i.e., that are independently generated from $(X,Y)$ for classification problems, and obtain two ROC curves, would the two ROC curves be quite different? Explain your answer. When there are 3 or more classes, are the codes provided in the lecture notes able to obtain ROC curves and their AUC's for LDA and QDA?
+
+A ROC curve is a receiver operating characteristics (ROC) curve and is a popular graphic for simultaneously displaying
+the two types of errors for all possible thresholds. 
+An AUC is area under the (ROC) curve that is the overall performance of a classifier, summarized over all possible thresholds.
+
+6.5) Describe the key similarities and differences, respectively, between LDA and logistic regression. Provide a situation where discriminant analysis can still be sensibly applied but logistic regression is not well-defined.
+
+Similarities:
+Differences:
+
+# Applied exercises: I ($k$-NN classifier)
+
+\noindent
+7. Please refer to the NYC flight data `nycflights13` that has been discussed in the lecture notes and whose manual can be found at https://cran.r-project.org/web/packages/nycflights13/index.html. We will use `flights`, a tibble from `nycflights13`.
+
+Please use `set.seed(123)` for the whole of this exercise. Randomly select from `flights` for each of the 3 `carrier` "UA", "AA" or "DL" 500 observations for the 3 features `dep_delay`, `arr_delay` and `distance`. Let us try to see if we can use the 3 features to identify if an observation belongs a specific carrier. The following tasks and questions are based on the extracted observations. Note that you need to remove rows with `na`'s from the extracted observations. 
+
+```{r, echo=TRUE, warning=FALSE}
+library(nycflights13)
+data(flights)
+
+f <- na.omit(flights)
+
+df1 <- filter(f, f$carrier == c("UA", "AA", "DL"))
+df2 <- df1[, c("carrier", "dep_delay", "arr_delay", "distance")]
+flight <- df2[sample(nrow(df2), 500),]; flight
+```
+
+7.1) First, you need to standardize the features since they are on very different scales. Then randomly split the observations into a training set that contains 70% of the observations and a test set that contains the remaining observations.
+
+```{r, echo=TRUE, warning=FALSE}
+# classes
+flight$Class[flight$carrier == 'UA'] <- 0
+flight$Class[flight$carrier == 'AA'] <- 1
+flight$Class[flight$carrier == 'DL'] <- 2
+
+# standardize
+fdf <- scale(flight[,2:4])
+set.seed(123)
+
+# split data
+trainSet <- base::sample(1:nrow(fdf),0.7*nrow(fdf))
+testSet <- (1:nrow(fdf))[-trainSet]
+train <- fdf[trainSet,]
+test <- fdf[testSet,]
+
+# create class labels
+trainLabels <- flight$Class[trainSet]
+testLabels <- flight$Class[testSet]
+```
+
+
+7.2) Consider the observations as forming 3 classes that are determined by `carrier`. To the training set, apply $10$ fold cross-validation to $k$-NN classifier with features `arr_delay`, `dep_delay`, and `distance` to determine the optimal $k$ from the values $\{1,\ldots,15\}$. Apply the optimal $k$-NN to the test set, provide the classification table and the overall error rate, and provide visualization of the classification results. Do you think the error rate is reasonable? Explain your answer. (Hint: you can follow the strategy provided by Example 3 in "LectureNotes4b_notes.pdf". )
+
+```{r, echo=TRUE, warning=FALSE}
+m=10
+set.seed(123)
+
+folds=sample(1:m,nrow(train),replace=TRUE)
+
+k=2
+testError1 = double(m) 
+
+library(MASS)
+library(class)
+
+# k min
+for (s in 1:m) { # loop through s=1,...,m
+   trainingTmp =train[folds !=s,]
+   testTmp =train[folds==s,]
+   trainingLabsTmp =trainLabels[folds !=s]
+   testLabsTmp =trainLabels[folds==s]
+   knn2= knn(trainingTmp,testTmp,trainingLabsTmp,k)
+   nOfMissObs= sum(1-as.numeric(knn2==testLabsTmp))
+   terror=nOfMissObs/length(testLabsTmp) # test error
+   testError1[s]=terror} # end of loop
+
+# k max
+kmax=20 # m=10 fold cv
+testErrors = matrix(0,nrow=2,ncol=kmax)
+for (k in 1:kmax) { # loop through k
+   testError1 = double(m) # store test errors for each k
+   for (s in 1:m) { # loop through s
+      trainingTmp =train[folds !=s,]
+      testTmp =train[folds==s,]
+      trainingLabsTmp =trainLabels[folds !=s]
+      testLabsTmp =trainLabels[folds==s]
+      knntmp= knn(trainingTmp,testTmp,trainingLabsTmp,k)
+      nOfMissObs= sum(1-as.numeric(knntmp==testLabsTmp))
+      terror=nOfMissObs/length(testLabsTmp) # test error
+      testError1[s]=terror} # loop in s ends
+   testErrors[,k]=c(mean(testError1),sd(testError1))} # loop in k ends
+
+# data frame for mean/sd  
+colnames(testErrors)= paste("k=",1:kmax,sep="")
+rownames(testErrors)=c("mean(TestError)","sd(TestError)")
+testErrors=as.matrix.data.frame(testErrors)
+as.numeric(testErrors[1,])
+
+# optimal k 
+hatk=which(testErrors[1,]==min(testErrors[1,])); hatk
+```
+
+The error rate is reasonable because all means and standard deviations are relatively close to one another. The smallest test error rate among a family of kNN classifiers is when k = 9. 
+
+7.3) Note that your have standardized the features `arr_delay`, `dep_delay`, and `distance`. However, with the unstandardized features, you would surely know that none of them follows a Gaussian distribution no matter with respect to which class (i.e., `carrier`) you look at their observations since these features have non-negative values (whereas a Gaussian distribution can generate negative values). Again, the 3 classes are determined by `carrier`. So, you will apply QDA based on the 3 standardized the features to the training set to train the model, and then apply the trained model to the test set (that contains the 3 standardized the features) to classify its observations. 
+
+```{r, echo=TRUE, warning=FALSE}
+set.seed(123)
+
+t <- as.data.frame(train)
+dd <- as.data.frame(t$dep_delay)
+ad <- as.data.frame(t$arr_delay)
+dst <- as.data.frame(t$distance)
+
+qda.fit1 <- qda(trainLabels ~., data = dd)
+pred1 <- predict(qda.fit1)$class
+mtx1 <- as.data.frame(pred1)
+qda.fit2 <- qda(trainLabels ~., data = ad)
+pred2<- predict(qda.fit2)$class
+mtx2 <- as.data.frame(pred2)
+qda.fit3 <- qda(trainLabels ~., data = dst)
+pred3 <- predict(qda.fit3)$class
+mtx3 <- as.data.frame(pred3)
+   
+trainModel <- cbind(mtx1, mtx2, mtx3)
+   
+# apply the trained model to the test set (that contains the 3 standardized the features) to classify its observations 
+knnOpt <- knn(trainModel,test,trainLabels,hatk)
+table(knnOpt, testLabels)
+```
+
+(7.3a) First, check if the Gaussian assumption is satisfied. For this, note that if the standardized features `arr_delay`, `dep_delay`, and `distance` follow a trivariate Gaussian distribution for each individual class, then any pair among the 3 standardized features follows a bivariate Gaussian distribution for each individual class.
+
+```{r, echo=TRUE, warning=FALSE}
+library("ggpubr")
+ggdensity(flight$dep_delay, 
+          main = "Density plot of dep_delay",
+          xlab = "dep_delay")
+
+ggdensity(flight$arr_delay, 
+          main = "Density plot of arr_delay",
+          xlab = "arr_delay")
+
+ggdensity(flight$distance, 
+          main = "Density plot of distance",
+          xlab = "distance")
+```
+
+(7.3b) Apply the estimated (i.e., trained) QDA model to the test set, provide the estimated mixing proportion and estimated mean vector for each class, and provide the classification table. If you randomly pick an observation on the 3 standardized features, is it approximately equally likely to belong to each of the 3 carriers? (You do not need to mathematically prove your answer. However, think along this line: we are testing the equality of 3 population proportions, and each estimated population proportion is based on around 350 observations, which approximately can be done via a z-test since the central limit theorem is in effect.) How is the performance of QDA on this test set? Explain your answers.
+
+```{r, echo=TRUE, warning=FALSE}
+library(MASS)
+
+# apply the estimated (i.e., trained) QDA model to the test set
+# provide the estimated mixing proportion and estimated mean vector for each class
+qda.class1 <- predict(qda.fit1, dd)$class
+qda.fit1$prior
+qda.fit1$means
+   
+qda.class2 <- predict(qda.fit2, ad)$class
+qda.fit2$prior
+qda.fit2$means
+   
+qda.class3 <- predict(qda.fit3, dst)$class
+qda.fit3$prior
+qda.fit3$means
+
+tst <- as.data.frame(test)
+dd2 <- as.data.frame(tst$dep_delay)
+ad2 <- as.data.frame(tst$arr_delay)
+dst2 <- as.data.frame(tst$distance)
+
+# provide the classification table
+table(as.data.frame(qda.class1), dd2)
+table(as.data.frame(qda.class2), ad2)
+table(as.data.frame(qda.class2), dst2)
+```
+
+If you randomly pick an observation on the 3 standardized features, it is approximately equally likely to belong to each of the 3 carriers. 
+How is the performance of QDA on this test set? Explain your answers.
+
+(7.3c) Extract observations that are for "UA" or "DL" from the training set and the test set, respectively, to form a new training set and a new subset, so that there are now 2 classes "UA" and "DL". Apply QDA to the new training set and then apply the trained model to the new test set. Report the overall error rate on the test set, provide the ROC curve, and calculate the AUC. How is the performance of QDA on this test set? Explain your answer.
+
+```{r, echo=TRUE, warning=FALSE}
+flight_new <- filter(flight, flight$carrier == c('UA', 'DL'))
+
+# standardize
+fdf_new <- scale(flight_new[,2:4])
+set.seed(123)
+
+# split data
+trainSet_new <- base::sample(1:nrow(fdf_new),0.7*nrow(fdf_new))
+testSet_new <- (1:nrow(fdf_new))[-trainSet_new]
+train_new <- fdf[trainSet_new,]
+test_new <- fdf[testSet_new,]
+
+# create class labels
+trainLabels_new <- flight_new$Class[trainSet_new]
+testLabels_new <- flight_new$Class[testSet_new]
+```
+
+```{r, echo=TRUE, warning=FALSE}
+t_new <- as.data.frame(train_new)
+dd_new <- as.data.frame(t_new$dep_delay)
+ad_new <- as.data.frame(t_new$arr_delay)
+dst_new <- as.data.frame(t_new$distance)
+
+set.seed(123)
+
+qda.fit1_new <- qda(trainLabels_new ~., data = dd_new)
+pred1_new <- predict(qda.fit1_new)$class
+mtx1_new <- as.data.frame(pred1_new)
+qda.fit2_new <- qda(trainLabels_new ~., data = ad_new)
+pred2_new<- predict(qda.fit2_new)$class
+mtx2_new <- as.data.frame(pred2_new)
+qda.fit3_new <- qda(trainLabels_new ~., data = dst_new)
+pred3_new <- predict(qda.fit3_new)$class
+mtx3_new <- as.data.frame(pred3_new)
+   
+trainModel_new <- cbind(mtx1_new, mtx2_new, mtx3_new)
+   
+# apply the trained model to the test set (that contains the 3 standardized the features) to classify its observations 
+knnOpt_new <- knn(trainModel_new,test_new,trainLabels_new,hatk)
+table(knnOpt_new, testLabels_new)
+
+qda.class1_new <- predict(qda.fit1_new, dd_new)$class
+qda.fit1_new$prior
+qda.fit1_new$means
+   
+qda.class2_new <- predict(qda.fit2_new, ad_new)$class
+qda.fit2_new$prior
+qda.fit2_new$means
+   
+qda.class3_new <- predict(qda.fit3_new, dst_new)$class
+qda.fit3_new$prior
+qda.fit3_new$means
+
+tst_new <- as.data.frame(test_new)
+dd2_new <- as.data.frame(tst_new$dep_delay)
+ad2_new <- as.data.frame(tst_new$arr_delay)
+dst2_new <- as.data.frame(tst_new$distance)
+
+# provide the classification table
+table(as.data.frame(qda.class1), dd2_new)
+table(as.data.frame(qda.class2), ad2_new)
+table(as.data.frame(qda.class2), dst2_new)
+```
+
+# Applied exercises: II (Discriminant analysis)
+
+\noindent
+8. The following is on software commands:
+
+(8.1) What is the main cause of the message "Warning in `lda.default`(x, grouping, ...): variables are collinear"? What is the main cause of the message "Error in `qda.default`(x, grouping, ...) : some group is too small for 'qda'"? 
+
+Warning in `lda.default`(x, grouping, ...): variables are collinear: the predictors are correlated, which leads to inclusive results if the predictors are too similar. 
+
+Error in `qda.default`(x, grouping, ...) : some group is too small for 'qda': there are factors that are being made to predict and they all need to have the same level of observations in order for it to work. 
+
+(8.2) Provide details on the `list` that `predict{MASS}` returns.
+
+The list includes a class which is the map classification. It also includes posterior which is the posterior probabilites of the classes. 
+
+(8.3) The arguments `gamma` and `lambda` of `rda{klaR}` are usually determined by cross-validation. Can they be set manually?
+
+Yes
+
+\noindent
+9. We will use the human cancer microarray data that were discussed in the lectures and are provided by the R library `ElemStatLearn` (available at https://cran.r-project.org/src/contrib/Archive/ElemStatLearn/). Pick 3 cancer types "MELANOMA", "OVARIAN" and "RENAL", and randomly select the same set of $60$ genes for each cancer type. Please use `set.seed(123)` for the whole of this exercise. Your analysis will be based on observations for these genes and cancer types.
+
+9.1) Pick 2 features and visualize the observations using the 2 features. Do you think it is hard to classify the observations based on the amount of overlap among the 3 neighborhoods of observations in each of the 3 classes? Here "a neighborhood of observations in a class" is a "open disk that contains the observations in the class".
+
+```{r, echo=TRUE, warning=FALSE}
+
+library(ElemStatLearn)
+data("nci"); n0=dim(nci)[2]; p0=dim(nci)[1]
+
+set.seed(123)
+
+rSel = sample(1:p0, size=60, replace = FALSE)
+chk = colnames(nci) %in% c("MELANOMA", "OVARIAN", "RENAL")
+cSel = which(chk ==TRUE)
+ncia = nci[rSel,cSel]
+colnames(ncia) = colnames(nci)[cSel]
+
+tmp = data.frame(t(ncia)); tmp$Class=colnames(ncia)
+table(tmp$Class)
+tmp[1:2,(ncol(tmp)-2):ncol(tmp)]
+```
+
+It is not hard to classify the observations based on the amount of overlap among the 3 neighborhoods of observations in each of the 3 classes when viewed in their ambient space R^2. 
+
+9.2) Apply LDA and report the classwise error rate for each cancer type.
+
+```{r, echo=TRUE, warning=FALSE}
+lda.fit = lda(Class~.,data=tmp)
+lda.pred = predict(lda.fit,tmp)
+TrueClassLabel=tmp$Class
+LDAEstimtedClassLabel=lda.pred$class
+table(LDAEstimtedClassLabel,TrueClassLabel)
+
+# classwise errors
+```
+
+MELANOMA: 6/6 = 1
+RENAL: 5/5 = 1
+OVARIAN: 9/12 = 0.75
+
+9.3) Use the library `klaR`, and apply regularized discriminant analysis (RDA) by setting the arguments `gamma` and `lambda` of `rda{klaR}` manually so that the resulting classwise error rate for each cancer type is zero.
+
+```{r, echo=TRUE, warning=FALSE}
+library(klaR)
+
+rda.fit = rda(Class~.,data=tmp, gamma = 0.05, lambda = 0.2)
+rda.pred = predict(rda.fit, tmp) # classify obs in `tmp`
+TrueClassLabel=tmp$Class
+rDAEstimtedClassLabel=rda.pred$class
+table(rDAEstimtedClassLabel,TrueClassLabel)
+```
+
+9.4) Obtain the estimated covariance matrices from the RDA and visualize them using the same strategy in Example 3 in "LectureNotes5c_notes.pdf". What can you say about the degree of dependence among these genes for each of the three cancer types? (Hint and caution: the class labels "MELANOMA", "OVARIAN" and "RENAL" will be ordered sigmabetically by R. So, you need to keep track on which estimated covariance matrix is for which class. Otherwise, you will get wrong visualization.)
+
+```{r, echo=TRUE, warning=FALSE}
+hatSigma1 = rda.fit$covariances[,,1]
+hatSigma2 = rda.fit$covariances[,,2]
+hatSigma3 = rda.fit$covariances[,,3]
+
+library(reshape2)
+
+melted_hatSigma1 = melt(hatSigma1)
+melted_hatSigma2 = melt(hatSigma2)
+melted_hatSigma3 = melt(hatSigma3)
+EstSigmaAll=rbind(melted_hatSigma1,melted_hatSigma2, + melted_hatSigma3)
+EstSigmaAll$Cancer=rep(c("MELANOMA", "OVARIAN", "RENAL"), each=nrow(melted_hatSigma1))
+EstSigmaAll$Cancer=factor(EstSigmaAll$Cancer)
+
+library(ggplot2)
+
+ggplot(data=EstSigmaAll, aes(x=Var1, y=Var2, fill=value)) + geom_tile()+scale_fill_gradient2(low="blue", high="red")+ facet_grid(~Cancer) + xlab("")+ylab("") + ggtitle("Estimated covariance matrices") + theme(plot.title = element_text(hjust = 0.5))
+```
+There is much less degree of dependence among genes for "RENAL" cancer versus thes genes for other two cancer types.
